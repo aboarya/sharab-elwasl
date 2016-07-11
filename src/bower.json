@@ -1,0 +1,11 @@
+{
+  "name": "sharab-elwasl",
+  "description": "Sharab El-Wasl Burhaniya Qasidas",
+  "version": "0.0.0",
+  "homepage": "http://sharabelwasl.com",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.5.x"
+  }
+}
