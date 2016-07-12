@@ -58,4 +58,4 @@ var sharabelwasl = angular
   // Angular Dynamic Locale
   .config(function (tmhDynamicLocaleProvider) {
     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
-  });
+});

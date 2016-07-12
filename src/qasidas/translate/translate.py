@@ -59,6 +59,7 @@ Vietnamese  vi
 Welsh   cy
 Yiddish     yi
 """
+import time
 import os
 import urlparse
 import urllib
@@ -71,7 +72,7 @@ from urllib2 import HTTPRedirectHandler, HTTPDefaultErrorHandler, HTTPError
 
 ### Hard-coded variables ###
 
-api = 'AIzaSyApclbivSPp4dMwPWIpbAbU1mL9JU2q_r4'
+api = ''
 
 languages = ["af", "sq", "ar","be", "bg", "ca", "zh-CN", "zh-TW", "hr",
              "cs", "da", "nl", "en", "et", "tl", "fi", "fr", "gl", "de",
@@ -236,7 +237,7 @@ class GoogleTranslator(object):
         # going to have json, decode it first
         return self._decode_json(content)
 
-    def translate(self, query, target="en", source="", _dirty=False):
+    def translate(self, query, target="en", source="", _dirty=False, count=0):
         """
         Translate a query.
 
@@ -266,6 +267,8 @@ class GoogleTranslator(object):
         it is assumed that the list of words all have the same source language
         when resubmitted.
         """
+        # exponential backoff 
+        # time.sleep(0*count)
         try:
             assert _validate_language(target)
         except:
