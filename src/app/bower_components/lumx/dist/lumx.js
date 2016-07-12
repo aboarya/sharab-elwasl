@@ -2781,6 +2781,10 @@
         {
             modelController = _modelControler;
         }
+
+        function _alert() {
+            alert("wtf");
+        }
     }
 })();
 (function()

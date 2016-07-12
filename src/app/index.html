@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="burhaniya">
+<html lang="en" ng-app="sharabelwasl">
   <head>
     <meta charset="utf-8">
     <title>STARTING</title>
@@ -18,17 +18,36 @@
     <div class="page text-center content ng-scope">
       <div ng-include  ng-include src="'header.html'"></div>
       <div ng-include  ng-include src="'content.html'"></div>
+
     </div>
     <!-- Before body closing tag -->
+
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/velocity/velocity.js"></script>
     <script src="bower_components/moment/min/moment-with-locales.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+    <script src="bower_components/angular-translate-handler-log/angular-translate-handler-log.js"></script>
+    <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+    <script src="bower_components/elasticsearch/elasticsearch.angular.js"></script>
     <script src="bower_components/lumx/dist/lumx.js"></script>
-    <script type="text/javascript">
-      
-      angular.module('burhaniya', ['lumx']);
-    </script>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/TranslateController.js"></script>
+    <script src="scripts/controllers/QueryController.js"></script>
+    <script src="scripts/services/QueryService.js"></script>
+    <script src="scripts/services/LocaleService.js"></script>
+    <script src="scripts/directives/LanguageSelectDirective.js"></script>
+    <script src="scripts/directives/InternationalizeDirective.js"></script>
   </body>
 </html>
   

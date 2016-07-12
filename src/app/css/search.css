@@ -8,37 +8,6 @@
     background-size: 100% 100%;
 } 
 
-/*and finally, we serve for every view-port the right image:*/
-
-/* Retina display */
-@media screen and (min-width: 1024px){
-    #search{
-        background-image: url('../img/lantern.jpg');
-    }
-}
-
-/* Desktop */
-@media screen and (min-width: 980px) and (max-width: 1024px){
-    #search{
-        background-image: url('../img/lantern.jpg');
-    }
-}
-
-/* Tablet */
-@media screen and (min-width: 760px) and (max-width: 980px){
-    #search{
-        /*background-image: url('../img/lantern_tablet.jpg');*/
-    }
-}
-
-@media screen and (min-width: 760px) and (max-width: 980px) and (orientation:portrait) {
-    #search{
-        
-        -webkit-background-size: 768px 1024px !important;
-        background-size: 768px 1024px !important;
-        background: url('../img/lantern.jpg') no-repeat center top #000 !important;
-    }
-}
 
 .square { width: 50%; height: 50%; float: left; }
 #verse { 
@@ -58,7 +27,7 @@ align-items: center; /* align vertical */
 }
 
 .diwanltr .diwanltr-menu {
-    font-size: 24px;
+    font-size: 18px;
     margin-right:35px;
     padding-top: 9px;
 }
