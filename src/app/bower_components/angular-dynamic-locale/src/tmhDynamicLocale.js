@@ -96,6 +96,7 @@ angular.module('tmh.dynamicLocale', []).config(['$provide', function($provide) {
    */
   function loadLocale(localeUrl, $locale, localeId, $rootScope, $q, localeCache, $timeout) {
 
+
     function overrideValues(oldObject, newObject) {
       if (activeLocale !== localeId) {
         return;
@@ -183,6 +184,7 @@ angular.module('tmh.dynamicLocale', []).config(['$provide', function($provide) {
   };
 
   this.useStorage = function(storageName) {
+    
     storageFactory = storageName;
   };
 
@@ -191,6 +193,7 @@ angular.module('tmh.dynamicLocale', []).config(['$provide', function($provide) {
   };
 
   this.defaultLocale = function(value) {
+
     defaultLocale = value;
   };
 

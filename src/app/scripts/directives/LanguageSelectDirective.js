@@ -8,7 +8,7 @@
 var sharabelwasl = angular.module('sharabelwasl');
 
 angular.module('sharabelwasl')
-  .directive('ngTranslateLanguageSelect', function (LocaleService) {
+  .directive('ngTranslateLanguageSelect', function (LanguageSelectService) {
     'use strict';
 
     return {
@@ -56,13 +56,13 @@ angular.module('sharabelwasl')
           '</div>'+ 
       '',
       controller: function ($scope) {
-        $scope.currentLocaleDisplayName = LocaleService.getLocaleDisplayName();
-        $scope.localesDisplayNames = LocaleService.getLocalesDisplayNames();
+        $scope.currentLocaleDisplayName = LanguageSelectService.getLocaleDisplayName();
+        $scope.localesDisplayNames = LanguageSelectService.getLocalesDisplayNames();
         // $scope.visible = $scope.localesDisplayNames &&
         // $scope.localesDisplayNames.length > 1;
 
         $scope.changeLanguage = function (locale) {
-          LocaleService.setLocaleByDisplayName(locale);
+          LanguageSelectService.setLocaleByDisplayName(locale);
         };
       }
     };

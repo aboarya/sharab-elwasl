@@ -236,6 +236,7 @@ angular.module('tmh.dynamicLocale', []).config(['$provide', function($provide) {
        * @description Returns the configured locale
        */
       get: function() {
+        alert("+1");
         return activeLocale;
       }
     };

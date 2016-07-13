@@ -38,11 +38,11 @@ def _make_index(data):
     return {
         'qasida_number' : data['qasida_number'],
         'title' : data['title'],
-        'title_na' : data['title_na'],
-        'title_en' : data['title_en'],
-        'title_de' : data['title_de'],
-        'title_nl' : data['title_nl'],
-        'title_fr' : data['title_fr'],
+        'na_title' : data['title_na'],
+        'en_title' : data['title_en'],
+        'de_title' : data['title_de'],
+        'nl_title' : data['title_nl'],
+        'fr_title' : data['title_fr'],
 
         'lineNum': data['txtNum'],
         'source': data['verse_clean'],
@@ -118,6 +118,7 @@ def create_index(directory, e):
             try:                
                 for lineText in qasida:
                     lineNum += 1
+                    if '----------' in line: continue
                     if '***' in lineText:
                         if len(lineText) > 0:
                             txtNum += 1

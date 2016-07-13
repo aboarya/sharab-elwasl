@@ -1,12 +1,12 @@
 /**
  * @ngdoc function
- * @name sharabelwasl.factory:LocaleService
+ * @name sharabelwasl.factory:LanguageSelectService
  * @description
- * # LocaleService
+ * # LanguageSelectService
  * Service for setting/getting current locale
  */
 angular.module('sharabelwasl')
-  .service('LocaleService', function ($translate, LOCALES, $rootScope, tmhDynamicLocale) {
+  .service('LanguageSelectService', function ($translate, LOCALES, $rootScope, tmhDynamicLocale) {
     'use strict';
     // VARS
     var localesObj = LOCALES.locales;
@@ -21,7 +21,7 @@ angular.module('sharabelwasl')
       _LOCALES_DISPLAY_NAMES.push(localesObj[locale]);
     });
 
-    var currentLocale = $translate.proposedLanguage();// because of async loading
+    $rootScope.currentLocale = $translate.proposedLanguage();// because of async loading
 
     // METHODS
     var checkLocaleIsValid = function (locale) {
@@ -34,7 +34,7 @@ angular.module('sharabelwasl')
         return;
       }
       startLoadingAnimation();
-      currentLocale = locale;
+      $rootScope.currentLocale = locale;
       $translate.use(locale);
     };
 
@@ -65,7 +65,7 @@ angular.module('sharabelwasl')
 
     return {
       getLocaleDisplayName: function () {
-        return localesObj[currentLocale];
+        return localesObj[$rootScope.currentLocale];
       },
       setLocaleByDisplayName: function (localeDisplayName) {
         setLocale(

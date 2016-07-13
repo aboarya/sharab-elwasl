@@ -44,17 +44,13 @@
 }
 
 </style>
-<main class="page-content" ng-controller="QueryController" internationalize>
+<main class="page-content" ng-controller="QueryController" >
   <!-- Introduction -->
-  <section id="search" data-index="1" data-type="anchor" class="bg-default set-relative">
+  <section id="search" data-index="1" data-type="anchor" class="" scroll ng-controller="DisplayController">
     <div ng-translate-language-select></div>
     <div class="outer">
       <div class="middle">
         <div class="inner">
-          <table>
-          <tr ng-repeat="item in hits">
-          <td>{{item['_source']['arabic']}}</td></tr>
-        </table>
           <img src="img/search-logo.png" style="display: inline"/>
           <form class="rd-mailform search-form">
             <div >
@@ -73,10 +69,10 @@
                           </lx-dropdown-toggle>
                           <lx-dropdown-menu>
                             <ul >
-                              <li><a class="dropdown-link dropdown-link--is-header">{{ "content.search.popularLabel" | translate }}</a></li>
-                              <li><a class="dropdown-link" ng-click="search()">{{ "content.search.popular1" | translate }}</a></li>
-                              <li><a class="dropdown-link">{{ "content.search.popular2" | translate }}</a></li>
-                              <li><a class="dropdown-link">{{ "content.search.popular3" | translate }}</a></li>
+                              <li><a class="dropdown-link dropdown-link--is-header" >{{ "content.search.popularLabel" | translate }}</a></li>
+                              <li><a class="dropdown-link" ng-click="search($event)" search='{{ "content.search.popular1" | translate }}'>{{ "content.search.popular1" | translate }}</a></li>
+                              <li><a class="dropdown-link" ng-click="search($event)" search='{{ "content.search.popular1" | translate }}'>{{ "content.search.popular2" | translate }}</a></li>
+                              <li><a class="dropdown-link" ng-click="search($event)" search='{{ "content.search.popular1" | translate }}'>{{ "content.search.popular3" | translate }}</a></li>
                             </ul>
                           </lx-dropdown-menu>
                         </lx-dropdown>
@@ -89,9 +85,21 @@
         </div>
       </div>
     </div>
- </section>
-  <section id="read" data-index="1" data-type="anchor" class="bg-default set-relative">
-    read
+  </section>
+  <section id="read" data-index="2" data-type="anchor">
+    <div ng-repeat="result in results">
+      <div>-------</div>
+      <div>{{result['_title']}}</div>
+      <div>{{result['_first']}}</div>
+      <div>{{result['_second']}}</div>
+      
+    </div>
+  </section>
+  <section id="extra" data-index="3" data-type="anchor">
+  extra
+  </section>
+  <section id="what" data-index="3" data-type="anchor">
+  what
   </section>
 <!-- END Introduction-->
 </main>

@@ -5,22 +5,21 @@
  * # Internationalize
  * Directive to append language select and set its view and behavior
  */
-var sharabelwasl = angular.module('sharabelwasl');
-sharabelwasl.controllers = sharabelwasl.controllers || {};
-sharabelwasl.directives = sharabelwasl.directives || {};
+// var sharabelwasl = angular.module('sharabelwasl');
+// var sharabelwasl.controllers = sharabelwasl.controllers || {};
 
-sharabelwasl.directives.internationalize = angular.module('sharabelwasl')
-  .directive('ngInternationalize', function (LocaleService) {
-    'use strict';
+// angular.module('sharabelwasl')
+//   .directive('Internationalize', function (LocaleService) {
+//     'use strict';
 
-    return {
-      restrict: 'A',
-      replace: true,
-      controller: sharabelwasl.controllers.TranslateController
-    };
-  });
+//     return {
+//       restrict: 'A',
+//       replace: true,
+//       controller: sharabelwasl.controllers.translateController
+//     };
+//   });
 
-sharabelwasl.directives.openSearch = angular.module('sharabelwasl')
+angular.module('sharabelwasl')
   .directive('opensearch', function () {
     var isOpen = false;
     return {
