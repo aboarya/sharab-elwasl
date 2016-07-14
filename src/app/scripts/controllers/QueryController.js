@@ -6,12 +6,14 @@
  * Common application controller
  */
 var sharabelwasl = angular.module('sharabelwasl');
+sharabelwasl.clients = sharabelwasl.clients || {};
 
 angular.module('sharabelwasl')
   .controller('QueryController', function($scope, es, $translateLocalStorage) {
 
     var read = "#read";
-    $scope.map = {"_title":"", "_first":"", "_second":""};
+
+    $scope.ui_map = {"_title":"", "_first":"", "_second":"", "lineNum" : "", "qasida_number" : ""};
 
     $scope.searchFilter = {};
     $scope.tip = "Search";
@@ -19,21 +21,32 @@ angular.module('sharabelwasl')
     $scope.isSearchOpen = false;
 
     $scope.show_results = function(results) {
-    
-        var currentLang = $translateLocalStorage.get();
-        for (var key in $scope.map) {
-            $scope.map[key] = currentLang+key;
+        
+        var current_lang = $translateLocalStorage.get();
+
+        for (var key in $scope.ui_map) {
+            if (key.startsWith('_')) {$scope.ui_map[key] = current_lang+key;}
         }
 
-        $scope.results = results.map(function(result){
+
+        $scope.results = results.map(function(result) {
             list = [];
-            for (var key in $scope.map) {
-                var es_key = $scope.map[key];
-                list[key] = result['_source'][es_key];
+            for (var key in $scope.ui_map) {
+                var es_key = $scope.ui_map[key];
+                var value = result['_source'][es_key];
+                list[key] = value;
             }
             return list;
         });
+        
+        var table_name = "qasida_user_" + current_lang;
+        var params = {RequestItems: {table_name: {Keys: $scope.results}}};
 
+        sharabelwasl.clients.dynamodb.batchGetItem(params, function(err, data){
+            if (err) console.log(err, err.stack); // an error occurred
+            else     console.log(data);           // successful response
+            alert(err);
+        });
 
     }
 
@@ -51,7 +64,7 @@ angular.module('sharabelwasl')
   
     $scope.toggleSearch = function() {
         $scope.isSearchOpen = !$scope.isSearchOpen;
-    };
+    }
 
 });
 

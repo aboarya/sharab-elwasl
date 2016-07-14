@@ -59,3 +59,9 @@ var sharabelwasl = angular
   .config(function (tmhDynamicLocaleProvider) {
     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
 });
+
+/**
+* created shared dynamo db client
+*/
+sharabelwasl.clients = {};
+sharabelwasl.clients.dynamodb = new AWS.DynamoDB();

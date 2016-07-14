@@ -43,6 +43,10 @@
    */
 }
 
+.break {
+  height : 100px;    
+}
+
 </style>
 <main class="page-content" ng-controller="QueryController" >
   <!-- Introduction -->
@@ -86,14 +90,16 @@
       </div>
     </div>
   </section>
-  <section id="read" data-index="2" data-type="anchor">
+  <section id="read" data-index="2" data-type="anchor" >
     <div ng-repeat="result in results">
       <div>-------</div>
       <div>{{result['_title']}}</div>
       <div>{{result['_first']}}</div>
       <div>{{result['_second']}}</div>
-      
     </div>
+    <div class="break"></div>
+    <div> <span><h3>user translations</h3></span></div>
+    
   </section>
   <section id="extra" data-index="3" data-type="anchor">
   extra
