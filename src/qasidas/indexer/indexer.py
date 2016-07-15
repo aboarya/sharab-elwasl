@@ -38,7 +38,8 @@ def _make_index(data):
     return {
         'qasida_number' : data['qasida_number'],
         'title' : data['title'],
-        'na_title' : data['title_na'],
+        'ar__title' : data['title'],
+        'ar_title' : data['title_na'],
         'en_title' : data['title_en'],
         'de_title' : data['title_de'],
         'nl_title' : data['title_nl'],
@@ -75,7 +76,7 @@ def _process_verse(data, counter):
     data['verse_second_na'] = remove_accents(second.decode(encoding)).encode(encoding)
                             
     for target in targets:
-        time.sleep(0.3)
+        time.sleep(0.1)
         data['%s_first'%target] = _translate(target, first)
         data['%s_second'%target] = _translate(target, second)
         if not isinstance(data['title_na'], int):
@@ -83,7 +84,7 @@ def _process_verse(data, counter):
         else:
             data['title_%s' % target] = data['title_na']
 
-    time.sleep(2*math.log(counter))
+    time.sleep(math.log(counter))
     print "indexing qasida line", counter
     index("sharab-elwasl", data['es'], data['title'],
         data['txtNum'], data['lineNum'], _make_index(data))
@@ -118,7 +119,7 @@ def create_index(directory, e):
             try:                
                 for lineText in qasida:
                     lineNum += 1
-                    if '----------' in line: continue
+                    if '----------' in lineText: continue
                     if '***' in lineText:
                         if len(lineText) > 0:
                             txtNum += 1

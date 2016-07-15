@@ -3,72 +3,61 @@
 
 import sys
 import json
+import random
+
+import boto3
+client = boto3.client('dynamodb')
+
 import elasticsearch
+from elasticsearch import Elasticsearch
 
+_es = Elasticsearch()
+lang = 'en'
 
-# check command line
-# numArgs = len(sys.argv)
-# if numArgs < 3:
-#     print(str(len(sys.argv)) + ' args provided')
-#     usage()
-# author = sys.argv[1]
-# query = sys.argv[2]
-# if numArgs == 4:
-#     numResults = sys.argv[3]
-# else:
-#     numResults = 10
-    
+body = {"query":{"bool":{"must":[{"query_string":{"default_field":"_all","query":"love"}}],"must_not":[],"should":[]}},"from":0,"size":50,"sort":[],"aggs":{}}
+res = _es.search(index="sharab-elwasl", body=body)
+print("%d documents found" % res['hits']['total'])
+es_results = [res['_source'] for res in sorted(res['hits']['hits'], key=lambda r: r['_score'], reverse=True)]
+print len(es_results)
+for es_result in es_results:
+    print 'putting item in dynamo'
+    client.put_item(TableName='user_verse_en',Item={
+                    "en_first": {
+                        "S": es_result['en_first']
+                    },
+                    "first_user_tranlsation": {
+                        "S": es_result['en_first']
+                    },
+                    "first_num_up_votes": {
+                        "N": str(random.randint(1,20))
+                    },
+                    "first_num_down_votes": {
+                        "N": str(random.randint(1,20))
+                    },
+                    "en_second": {
+                        "S": es_result['en_second']
+                    },
+                    "second_user_tranlsation": {
+                        "S": es_result['en_second']
+                    },
+                    "second_num_up_votes": {
+                        "N": str(random.randint(1,20))
+                    },
+                    "second_num_down_votes": {
+                        "N": str(random.randint(1,20))
+                    }
+        })
 
+# key = '{}_first'.format(lang)
+# attrs = ['first_user_tranlsation', 'second_user_tranlsation',
+#         'first_num_up_votes', 'second_num_up_votes',
+#         'first_num_down_votes', 'second_num_down_votes', key]
 
-# single word query:
-#results = es.search(index=author, q=query, size=numResults)
-# phrase match query:
-
-# print(json.dumps(results, sort_keys=False, indent=2, separators=(',', ': ')))
-"""
-{"query":{"bool":{"must":[{"query_string":{"default_field":"_all","query":""}}],"must_not":[],"should":[]}},"from":0,"size":10,"sort":[],"aggs":{}}
-"""
-
-author="sharab-elwasl"
-numResults = 10
-encoding = "utf-8"
-def search(term):
-    print term
-    es = elasticsearch.Elasticsearch()  # use default of localhost, port 9200
-    results = es.search(
-    index=author,
-    body={
-        "size": numResults,
-        "query": {"match": 
-                {
-                # "text": {"query": term, "type": "phrase"},
-                "arabic_na": {"query": term, "type": "phrase"},
-
-        }}})
-    # results = es.search(index=author, q=term, size=numResults)
-    hitCount = results['hits']['total']
-    if hitCount > 0:
-    # the next might be needed if text is UTF-8 and there are mapping errors
-    #utf8stdout = open(1, 'w', encoding='utf-8', closefd=False)
-        if hitCount is 1:
-            print(str(hitCount) + ' result')
-        else:
-            print(str(hitCount) + ' results')
-        previousLine = ""
-        for hit in results['hits']['hits']:
-            text = hit['_source']['arabic']
-            print text
-            # lineNum = hit['_source']['lineNum']
-            # score = hit['_score']
-            # title = hit['_type']
-            # if lineNum > 1:
-            #     previousLine = es.get(index=author, doc_type=title, id=lineNum-1)
-            # nextLine = es.get(index=author, doc_type=title, id=lineNum+1)
-            # #print(str(lineNum) + ' (' + str(score) + '): ' + text, file=utf8stdout)
-            # print(title + ': ' + str(lineNum) + ' (' + str(score) + '): ')
-            # print(previousLine['_source']['text'] + text + nextLine['_source']['text'])
-    else:
-        print('No results')
-
-
-# query(sys.argv[1].decode(encoding))
+# query = { 'user_verse_{}'.format(lang): {
+#                 'Keys' : [{key: {'S': item[key]}} for item in items],
+#                 'AttributesToGet': attrs
+#             }
+#         }
+# raise RuntimeError([{key: {'S': item[key]}} for item in items])
+# results = client.batch_get_item(RequestItems=query)
+# results = results['Responses']['user_verse_{}'.format(lang)]
