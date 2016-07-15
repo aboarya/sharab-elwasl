@@ -13,7 +13,7 @@ angular.module('sharabelwasl')
 
     var read = "#read";
 
-    $scope.ui_map = {"_title":"", "_first":"", "_second":"", "lineNum" : "", "qasida_number" : ""};
+    $scope.ui_map = {"_title":"", "_first":"", "_second":""};
 
     $scope.searchFilter = {};
     $scope.tip = "Search";
@@ -21,26 +21,34 @@ angular.module('sharabelwasl')
     $scope.isSearchOpen = false;
 
     $scope.show_results = function(results) {
-        
+        $scope.dynamo_keys = [];
         var current_lang = $translateLocalStorage.get();
 
         for (var key in $scope.ui_map) {
-            if (key.startsWith('_')) {$scope.ui_map[key] = current_lang+key;}
+            $scope.ui_map[key] = current_lang + key;
         }
 
-
         $scope.results = results.map(function(result) {
-            list = [];
+            var list = [];
+            var first_lang = current_lang + "_first";
+            var second_lang = current_lang + "_second";
+            $scope.dynamo_keys.push({first_lang:result[first_lang], second_lang:result[second_lang]});
             for (var key in $scope.ui_map) {
+                
                 var es_key = $scope.ui_map[key];
                 var value = result['_source'][es_key];
                 list[key] = value;
             }
             return list;
         });
-        
-        var table_name = "qasida_user_" + current_lang;
-        var params = {RequestItems: {table_name: {Keys: $scope.results}}};
+
+
+        // AWS.config.update({region: 'eu-central-1'});
+        var x = AWS.config;
+        sharabelwasl.clients = {};
+        sharabelwasl.clients.dynamodb = new AWS.DynamoDB();
+        var table_name = "user_verse_" + current_lang;
+        var params = {RequestItems: {table_name: {Keys: $scope.dynamo_keys}}};
 
         sharabelwasl.clients.dynamodb.batchGetItem(params, function(err, data){
             if (err) console.log(err, err.stack); // an error occurred

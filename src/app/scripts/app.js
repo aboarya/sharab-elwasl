@@ -63,5 +63,4 @@ var sharabelwasl = angular
 /**
 * created shared dynamo db client
 */
-sharabelwasl.clients = {};
-sharabelwasl.clients.dynamodb = new AWS.DynamoDB();
+
