@@ -15,7 +15,7 @@
 }
 
 .break {
-  height : 50px;    
+  height : 50px;background-color: AntiqueWhite ;  
 }
 
 .paginate {
@@ -43,47 +43,72 @@
   text-align: center;
 }
 
+.verse {
+  height: 45px;
+}
 
 
-.col-1 {width: 7.5%;background-color: blue;}
-.col-2 {width: 16.66%;}
-.col-3 {width: 25%;}
+.col-1 {width: 4.1%;}
+.col-2 {width: 8.3%;}
+.col-3 {width: 16.66%;}
 .col-4 {width: 33.33%;}
-.col-5 {width: 41.66%;background-color: orange;}
-.col-6 {width: 50%;}
-.col-7 {width: 58.33%;}
-.col-8 {width: 66.66%;}
-.col-9 {width: 75%;}
-.col-10 {width: 83.33%;}
-.col-11 {width: 91.66%;}
-.col-12 {width: 100%;margin-top: 0px;background-color: red;}
+.col-5 {width: 20.83%;background-color: orange;}
+.col-6 {width: 25%;}
+.col-7 {width: 29.1%;}
+.col-8 {width: 33.33%;}
+.col-9 {width: 37%;}
+.col-10 {width: 41.16%;}
+.col-11 {width: 45.83%;}
+.col-12 {width: 50%;margin-top: 0px;background-color: red;}
+.col-13 {width: 54.16%;}
+.col-14 {width: 58.31%;}
+.col-15 {width: 62.47%;}
+.col-16 {width: 66.63%;}
+.col-17 {width: 70.7%;background-color: orange;}
+.col-18 {width: 74.86%;}
+.col-19 {width: 79.02%;}
+.col-20 {width: 83.17%;}
+.col-21 {width: 87.34%;}
+.col-22 {width: 91.5%;}
+.col-23 {width: 95.66%;}
+.col-24 {width: 100%;margin-top: 0px;}
 
-.qasida {margin-top: 0px;}
 </style>
 <div class="results">
-  <div class="col-6" style="background-color:blue;">&nbsp;</div>
-  <div class="col-6 qasida" style="">
-    <div class="break"></div>
-    <div class="col-12">
-      <div class="col-12" ng-repeat="(title, group) in pagedItems[currentPage]">
-        <div class="col-12">
-          <div class="col-12"> {a title a}</div>
-        </div>
-      <div class="col-12" ng-repeat="verse in group | orderBy:'lineNum'">
-        <div><div class="col-1">{a verse['lineNum'] a}</div><div class="col-5">{a verse['ar_first'] a}</div> <div class="col-5">{a verse['ar_second'] a} </div><div class="col-1">&nbsp;</div></div>
-        <div class="break"></div>
-        <div><div class="col-1">&nbsp;</div><div class="col-5">{a verse[lang_second] a} </div><div class="col-5">{a verse[lang_first] a}</div><div class="col-1">&nbsp;</div></div>
-        <div class="break"></div>
-        <div class="break"></div>
+  <div class="col-9" style="background-color:blue">
+    <div><img src="/static/img/maqam-resized.png"/></div>
+  </div>
+  <div class="col-1" style="">&nbsp;</div>
+  <div class="col-13" style="">
+    <div class="col-24">
+      <div class="col-24" ng-repeat="(title, group) in pagedItems[currentPage]">
+        <div class="col-24"><div class="col-12"> {a title a}</div></div>
+        <div class="col-24" ng-repeat="verse in group | orderBy:'lineNum'">
+          <div class="break"></div>
+          <div class="verse">
+            <div class="col-3">
+              {a verse['lineNum'] a}
+              <lx-button lx-ripple lx-tooltip="Tooltip" lx-tooltip-position="bottom" lx-size="m" lx-color="black" lx-type="icon">
+                <i class="mdi mdi-tooltip-text"></i>
+              </lx-button>
+              <lx-button lx-ripple lx-size="m" lx-color="black" lx-type="icon"><i class="mdi mdi-plus-circle"></i></lx-button>
+            </div>
+            <div class="col-9">{a verse['ar_second'] a} </div><div class="col-9">{a verse['ar_first'] a}</div>
+          </div>
+          <div class="verse">
+            <div class="col-3">&nbsp;</div>
+            <div class="col-9">{a verse[lang_first] a}</div><div class="col-9">{a verse[lang_second] a} </div>
+          </div>
       </div>
     </div>
+    <div class="col-24">
+      <ul>
+        <li class="col-2"><a href ng-click="prevPage()">« Prev </a></li>
+        <li class="col-2" ng-repeat="n in range(pagedItems.length)"  ng-click="setPage()" ><a href >{a titles[n] a}</a></li>
+        <li class="col-2"><a href ng-click="nextPage()">Next »</a></li>
+      </ul>
+    </div>  
   </div>
-  <div class="paginate">
-    <ul>
-      <li><a href ng-click="prevPage()">« Prev </a></li>
-      <li ng-repeat="n in range(pagedItems.length)"  ng-click="setPage()"><a href >{a titles[n] a}</a></li>
-      <li><a href ng-click="nextPage()">Next »</a></li>
-    </ul>
-  </div>  
-</div>    
+  </div>
+  <div class="col-1" style="background-color:blue">&nbsp;</div>
 </div>

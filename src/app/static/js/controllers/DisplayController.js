@@ -14,29 +14,29 @@ angular.module('sharabelwasl').controller('DisplayController', function($window,
 
         $scope.moveToSection = function() {
 
-            $scope.moved = false;
-            var windowHeight = angular.element($window).height();
+            // $scope.moved = false;
+            // var windowHeight = angular.element($window).height();
 
-            for (key in $scope.ids) {
+            // for (key in $scope.ids) {
             
-                var section = document.getElementById($scope.ids[key]);
-                var position = section.getBoundingClientRect().top;
+            //     var section = document.getElementById($scope.ids[key]);
+            //     var position = section.getBoundingClientRect().top;
 
                 
-                if (section.id == "search" && position > $scope.getMarker()) {
-                    $scope.scrollingUp = true;
-                } else if (section.id == "search" && position < $scope.getMarker()) {
-                    $scope.scrollingUp = false;
-                }
+            //     if (section.id == "search" && position > $scope.getMarker()) {
+            //         $scope.scrollingUp = true;
+            //     } else if (section.id == "search" && position < $scope.getMarker()) {
+            //         $scope.scrollingUp = false;
+            //     }
                 
-                if (position > 0 && position < windowHeight && !$scope.scrollingUp) {   
-                    // $('html,body').animate({scrollTop: $("#"+section.id+"").offset().top},'slow'); 
-                    return;
-                } else if (position > 0 && $scope.scrollingUp) {
-                    // $('html,body').animate({scrollTop: $("#"+$scope.ids[key-1]+"").offset().top},'slow');
-                    return;
-                }
-            }
+            //     if (position > 0 && position < windowHeight && !$scope.scrollingUp) {   
+            //         // $('html,body').animate({scrollTop: $("#"+section.id+"").offset().top},'slow'); 
+            //         return;
+            //     } else if (position > 0 && $scope.scrollingUp) {
+            //         // $('html,body').animate({scrollTop: $("#"+$scope.ids[key-1]+"").offset().top},'slow');
+            //         return;
+            //     }
+            // }
 
         }
 
