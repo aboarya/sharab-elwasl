@@ -1,0 +1,89 @@
+<style>
+* {
+    box-sizing: border-box;
+}
+.results::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+[class*="col-"] {
+  float: left;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 0px;
+}
+
+.break {
+  height : 50px;    
+}
+
+.paginate {
+  margin-left: 100px;
+  margin-top: 15px;
+  float: right;
+  width:50%;
+}
+.paginate ul li {
+  float: left;
+  width:10%;
+}
+
+/*.col-3 {
+  width:20%;
+  float:right;
+}*/
+
+.title-border {
+  width: 100%;
+}
+
+.q-title {
+  width: 100%;
+  text-align: center;
+}
+
+
+
+.col-1 {width: 7.5%;background-color: blue;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;background-color: orange;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;margin-top: 0px;background-color: red;}
+
+.qasida {margin-top: 0px;}
+</style>
+<div class="results">
+  <div class="col-6" style="background-color:blue;">&nbsp;</div>
+  <div class="col-6 qasida" style="">
+    <div class="break"></div>
+    <div class="col-12">
+      <div class="col-12" ng-repeat="(title, group) in pagedItems[currentPage]">
+        <div class="col-12">
+          <div class="col-12"> {a title a}</div>
+        </div>
+      <div class="col-12" ng-repeat="verse in group | orderBy:'lineNum'">
+        <div><div class="col-1">{a verse['lineNum'] a}</div><div class="col-5">{a verse['ar_first'] a}</div> <div class="col-5">{a verse['ar_second'] a} </div><div class="col-1">&nbsp;</div></div>
+        <div class="break"></div>
+        <div><div class="col-1">&nbsp;</div><div class="col-5">{a verse[lang_second] a} </div><div class="col-5">{a verse[lang_first] a}</div><div class="col-1">&nbsp;</div></div>
+        <div class="break"></div>
+        <div class="break"></div>
+      </div>
+    </div>
+  </div>
+  <div class="paginate">
+    <ul>
+      <li><a href ng-click="prevPage()">« Prev </a></li>
+      <li ng-repeat="n in range(pagedItems.length)"  ng-click="setPage()"><a href >{a titles[n] a}</a></li>
+      <li><a href ng-click="nextPage()">Next »</a></li>
+    </ul>
+  </div>  
+</div>    
+</div>

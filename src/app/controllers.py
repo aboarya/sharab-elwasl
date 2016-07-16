@@ -41,13 +41,20 @@ def search(term=None, lang=None):
     lang_first = '{}_first'.format(lang)
     user_translations  = '{}_user_translations'.format(lang)
 
-    es_results = api.search(term)
+    es_results, ordered = api.search(term)
 
-    results =[{
-        lang : {key : result['{}{}'.format(lang,key)] for key in keys } for lang in langs 
-        } for result in es_results
-    ]
+    # if es_results:
+    #     dynamo_results = api.dynamo.get(lang, es_results)
+    #     if dynamo_results:
+    #         for result in results:
+    #             for dynamo_result in dynamo_results:
+    #                 if result[lang]['_first'] == dynamo_result[lang_first]:
+    #                     result[user_translations] = dynamo_result
 
-    dynamo_results = api.dynamo.get(lang, es_results)
-    final = [ dict(r, **{user_translations: d}) for d in dynamo_results for r in results if d[lang_first] == r[lang]['_first'] ]
-    return flask.jsonify(final)
+    #             if not user_translations in result:
+    #                 result[user_translations] = dict()
+    # else:
+    #     final = results
+    print '>>>>>>>>>>>>> returning %d qasidas' % len(ordered)
+    response = dict(next='search',data=ordered)
+    return flask.jsonify(response)

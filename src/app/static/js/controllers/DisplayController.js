@@ -30,10 +30,10 @@ angular.module('sharabelwasl').controller('DisplayController', function($window,
                 }
                 
                 if (position > 0 && position < windowHeight && !$scope.scrollingUp) {   
-                    $('html,body').animate({scrollTop: $("#"+section.id+"").offset().top},'slow'); 
+                    // $('html,body').animate({scrollTop: $("#"+section.id+"").offset().top},'slow'); 
                     return;
                 } else if (position > 0 && $scope.scrollingUp) {
-                    $('html,body').animate({scrollTop: $("#"+$scope.ids[key-1]+"").offset().top},'slow');
+                    // $('html,body').animate({scrollTop: $("#"+$scope.ids[key-1]+"").offset().top},'slow');
                     return;
                 }
             }

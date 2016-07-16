@@ -10,7 +10,6 @@
  */
 var sharabelwasl = angular
   .module('sharabelwasl', [
-    'base64',
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -19,6 +18,7 @@ var sharabelwasl = angular
     'ngTouch',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
+    'xeditable',
     'lumx'
   ])
   .constant('DEBUG_MODE', /*DEBUG_MODE*/true/*DEBUG_MODE*/)

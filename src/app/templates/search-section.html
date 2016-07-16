@@ -1,0 +1,39 @@
+
+    <div ng-translate-language-select></div>
+    <div class="outer">
+      <div class="middle">
+        <div class="inner">
+          <img src="/static/img/search-logo.png" style="display: inline"/>
+          <form class="rd-mailform search-form">
+            <div >
+              <div flex-item >
+                <div class="card" >
+                  <div class="toolbar" >
+                    <span ng-click="toggleSearch()" class="toolbar__label fs-title ml black__text" style="color: #9e9e9e;">{a "content.search.tip" | translate a}</span>
+                    <div class="toolbar__right">
+                      <lx-search-filter lx-width="400" lx-closed="true" is-open="isSearchOpen">
+                        <input type="text" ng-model="vm.searchFilter.third">
+                      </lx-search-filter>
+                       <lx-dropdown lx-position="right" lx-over-toggle="true">
+                          <lx-dropdown-toggle>
+                            <lx-button lx-size="l" lx-color="black" lx-type="icon"><i class="mdi mdi-apps"></i></lx-button>
+                          </lx-dropdown-toggle>
+                          <lx-dropdown-menu>
+                            <ul >
+                              <li><a class="dropdown-link dropdown-link--is-header" >{a "content.search.popularLabel" | translate a}</a></li>
+                              <li><a class="dropdown-link" ng-click="search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
+                              <li><a class="dropdown-link" ng-click="search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
+                              <li><a class="dropdown-link" ng-click="search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
+                            </ul>
+                          </lx-dropdown-menu>
+                        </lx-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
