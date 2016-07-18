@@ -4,6 +4,7 @@
 import sys
 import json
 import random
+import uuid
 
 import boto3
 client = boto3.client('dynamodb')
@@ -26,34 +27,26 @@ for es_result in es_results:
     # client.put_item(TableName='qasida',Item={"qasida_number": {"S": str(es_result['qasida_number']) }})
 
     # client.put_item(TableName='verse_en',Item={"en_first": {"S": es_result['en_first']}, "qasida_number" : {"S":str(es_result['qasida_number']) },})
-
+    # if str(es_result['qasida_number']) == str(1):
+    #     es_result['en_first'] = es_result['en_first'].replace('Ibrahim', 'Ebrahim')
     client.put_item(TableName='user_verse_en',Item={
-                    "first_second_en" : {
-                        "S" : '{}_{}'.format(es_result['en_first'], es_result['en_second'])
-                    },
-                    "en_first": {
-                        "S": es_result['en_first']
+                    "translation_id" : {
+                        "S" : str(uuid.uuid4())
                     },
                     "first_user_translation": {
                         "S": es_result['en_first']
                     },
-                    "first_num_up_votes": {
+                    "num_up_votes": {
                         "N": str(random.randint(1,20))
                     },
-                    "first_num_down_votes": {
+                    "num_down_votes": {
                         "N": str(random.randint(1,20))
-                    },
-                    "en_second": {
-                        "S": es_result['en_second']
                     },
                     "second_user_translation": {
                         "S": es_result['en_second']
                     },
-                    "second_num_up_votes": {
-                        "N": str(random.randint(1,20))
-                    },
-                    "second_num_down_votes": {
-                        "N": str(random.randint(1,20))
+                    "line_number": {
+                        "S": str(es_result['lineNum'])
                     },
                     "qasida_number" : {"S" : str(es_result['qasida_number'])}
         })

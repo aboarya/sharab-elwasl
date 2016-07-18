@@ -1,5 +1,4 @@
 import os
-import base64
 import flask
 
 import api
@@ -43,18 +42,42 @@ def search(term=None, lang=None):
 
     es_results, ordered = api.search(term)
 
-    # if es_results:
-    #     dynamo_results = api.dynamo.get(lang, es_results)
-    #     if dynamo_results:
-    #         for result in results:
-    #             for dynamo_result in dynamo_results:
-    #                 if result[lang]['_first'] == dynamo_result[lang_first]:
-    #                     result[user_translations] = dynamo_result
-
-    #             if not user_translations in result:
-    #                 result[user_translations] = dict()
-    # else:
-    #     final = results
     print '>>>>>>>>>>>>> returning %d qasidas' % len(ordered)
     response = dict(next='search',data=ordered)
+    return flask.jsonify(response)
+
+@sharabelwasl.route('/dynamo/scan/<lang>/<qasida_number>/<line_number>')
+# @api.make_ajax
+def scan(lang=None, qasida_number=None, line_number=None):
+
+    response = api.scan(lang, qasida_number, line_number)
+    items = sorted(response['Items'], key=lambda i: (int(i['num_up_votes'])-int(i['num_down_votes'])), reverse=True)
+    items = [{key:str(val) for key, val in item.items()} for item in items]
+    print '>>>>>>>>>>>>>>>>>>', items
+    if response['Count'] > 3:
+        data = items[:3]
+    else:
+        data = items
+
+    response = dict(next='show_translation',data=data)
+    return flask.jsonify(response)
+
+@sharabelwasl.route('/dynamo/update/<lang>/<uuid>/<is_up>/<vote>')
+# @api.make_ajax
+def update(lang=None, uuid=None, is_up=1, vote=None):
+
+    response = api.update(lang, uuid, vote, is_up_vote=bool(int(is_up)))
+    print ' >>>>>>>>>> ', bool(int(is_up)), is_up
+    response = dict(next='show_vote',data=[{key:str(val) for key, val in response['Attributes'].items()}][0])
+    print '..............', response
+    return flask.jsonify(response)
+
+@sharabelwasl.route('/dynamo/add/<lang>/<qasida_number>/<line_number>/<user_first>/<user_second>')
+# @api.make_ajax
+def add(lang=None, qasida_number=None, line_number=None, user_first=None, user_second=None):
+
+    data = api.add(lang, qasida_number, line_number, user_first, user_second)
+    
+    response = dict(next='updated_translation',data=data)
+    print '..............', response
     return flask.jsonify(response)

@@ -2,6 +2,12 @@
 * {
     box-sizing: border-box;
 }
+
+.small-text {
+  font-size:13px;
+  font-weight: bold;
+  margin-left: -3px;
+}
 .results::after {
     content: "";
     clear: both;
@@ -59,7 +65,7 @@
 .col-9 {width: 37%;}
 .col-10 {width: 41.16%;}
 .col-11 {width: 45.83%;}
-.col-12 {width: 50%;margin-top: 0px;background-color: red;}
+.col-12 {width: 50%;}
 .col-13 {width: 54.16%;}
 .col-14 {width: 58.31%;}
 .col-15 {width: 62.47%;}
@@ -73,6 +79,32 @@
 .col-23 {width: 95.66%;}
 .col-24 {width: 100%;margin-top: 0px;}
 
+
+.loading {
+  opacity: 0.25;
+  background-image: url('/static/img/ajax1.gif');
+  background-repeat: no-repeat;
+  background-color: #d3d3d3;
+  background-position: center; 
+}
+
+[class^="sharabelwasl-icon-"],
+[class*=" sharabelwasl-icon-"] {
+    background: url("/static/img/sharab-elwasl-icons.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    
+}
+
+.sharabelwasl-icon-translate {
+  background-position: 0px 0px; 
+  width: 25px;
+  height: 23px;
+}
+
+.user-input {
+  margin: 0 auto;
+}
 </style>
 <div class="results">
   <div class="col-9" style="background-color:blue">
@@ -82,22 +114,86 @@
   <div class="col-13" style="">
     <div class="col-24">
       <div class="col-24" ng-repeat="(title, group) in pagedItems[currentPage]">
-        <div class="col-24"><div class="col-12"> {a title a}</div></div>
-        <div class="col-24" ng-repeat="verse in group | orderBy:'lineNum'">
+        <div class="col-24"><div class="col-24"> {a title a}</div></div>
+        <div class="col-24" ng-repeat="verse in group | orderBy:'lineNum'" id="{a current_lang a}_{a verse['qasida_number'] a}_{a verse['lineNum'] a}" loading>
           <div class="break"></div>
           <div class="verse">
             <div class="col-3">
-              {a verse['lineNum'] a}
-              <lx-button lx-ripple lx-tooltip="Tooltip" lx-tooltip-position="bottom" lx-size="m" lx-color="black" lx-type="icon">
+              <div class="col-8">{a verse['lineNum'] a}</div>
+              <div class="col-8"><lx-button lx-ripple lx-tooltip="Tooltip" lx-tooltip-position="bottom" lx-size="m" lx-color="blue-grey" lx-type="icon">
                 <i class="mdi mdi-tooltip-text"></i>
-              </lx-button>
-              <lx-button lx-ripple lx-size="m" lx-color="black" lx-type="icon"><i class="mdi mdi-plus-circle"></i></lx-button>
+              </lx-button></div>
+              <div class="col-8">
+                <lx-button ng-show="!is_showing(verse['qasida_number'], verse['lineNum'])" lx-ripple lx-size="m" lx-color="green" lx-type="icon" ng-click="getUserTranslations(verse['qasida_number'],verse['lineNum'])"><i class="mdi mdi-plus-circle"></i></lx-button>
+              </div>
+              <div class="col-6"><lx-button ng-model="show_translation" ng-show="is_showing(verse['qasida_number'], verse['lineNum'])" lx-ripple lx-size="m" lx-color="red" lx-type="icon" ng-click="removeUserTranslations(verse['qasida_number'],verse['lineNum'])"><i class="mdi mdi-minus-circle"></i></lx-button></div>
             </div>
-            <div class="col-9">{a verse['ar_second'] a} </div><div class="col-9">{a verse['ar_first'] a}</div>
+            <div class="col-9">{a verse['ar_second'] a} </div>
+            <div class="col-9">{a verse['ar_first'] a}</div>
           </div>
           <div class="verse">
             <div class="col-3">&nbsp;</div>
-            <div class="col-9">{a verse[lang_first] a}</div><div class="col-9">{a verse[lang_second] a} </div>
+            <div class="col-9">{a verse[lang_first] a}</div>
+            <div class="col-9">{a verse[lang_second] a} </div>
+          </div>
+          <div ng-show="is_showing(verse['qasida_number'], verse['lineNum'])" class="ng-hide">
+            <div ng-repeat="translation in translations" class="col-24">
+              <div class="verse" >
+                <div class="col-3">
+                  <div ng-show="$last" class="col-8">
+                    <lx-button lx-ripple lx-size="m" lx-color="blue-grey" lx-type="icon" ng-click="showUserInput(verse['qasida_number'], verse['lineNum'])"><i class="mdi mdi-book-open"></i></lx-button>
+                  </div>
+                  <div class="col-8" ng-show="!$last">&nbsp;</div>
+                  <div class="col-8">
+                    <lx-button lx-ripple lx-size="m" lx-color="red" lx-type="icon" ng-click="voteDown(translation.translation_id, translation['qasida_number'], translation['lineNum'])">
+                    <i class="mdi mdi-thumb-down-outline">
+                      <span class="small-text">{a translation['num_down_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                  <div class="col-8">
+                  <lx-button lx-ripple  lx-size="m" lx-color="blue" lx-type="icon" ng-click="voteUp(translation.translation_id, translation['qasida_number'], translation['lineNum'])">
+                    <i class="mdi mdi-thumb-up">
+                      <span class="small-text">{a translation['num_up_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                </div>
+                <div class="col-9">{a translation['first_user_translation'] a}</div>
+                <div class="col-9">{a translation['second_user_translation'] a}</div>
+              </div>
+            </div>
+            <div class="col-24" ng-show="is_showing(verse['qasida_number'], verse['lineNum'], 'user')" class="ng-hide">
+                <div class="col-3">
+                  <div class="col-8">
+                    &nbsp;
+                  </div>
+                  <div class="col-8"  >
+                    <lx-button lx-ripple lx-size="m" lx-color="red" lx-type="icon" ng-click="closeUserInput();">
+                    <i class="mdi mdi-close-circle">
+                      <span class="small-text">{a translation['num_down_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                  <div class="col-8"  class="user-input">
+                    <lx-button lx-ripple lx-size="m" lx-color="green" lx-type="icon" ng-click="saveUserTranslation(verse.qasida_number, verse.lineNum);">
+                    <i class="mdi mdi-content-save">
+                      <span class="small-text">{a translation['num_down_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                </div>
+                <div class="col-9">
+                  <lx-text-field lx-label="{a verse[lang_first] a}" lx-allow-clear="true" >
+                    <input type="text" ng-model="user_t.user_first" >
+                  </lx-text-field>
+                </div>
+                <div class="col-9">
+                  <lx-text-field lx-label="{a verse[lang_second] a}" lx-allow-clear="true" >
+                    <input type="text" ng-model="user_t.user_second">
+                  </lx-text-field>
+                </div>
+            </div>
           </div>
       </div>
     </div>

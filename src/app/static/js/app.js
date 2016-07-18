@@ -10,7 +10,6 @@
  */
 var sharabelwasl = angular
   .module('sharabelwasl', [
-    'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
@@ -64,7 +63,9 @@ var sharabelwasl = angular
     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
 });
 
-
+sharabelwasl.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+});
 /**
 * created shared dynamo db client
 */
