@@ -6,7 +6,7 @@
  * Service for setting/getting current locale
  */
 angular.module('sharabelwasl')
-  .service('LanguageSelectService', function ($translate, LOCALES, $rootScope, tmhDynamicLocale) {
+  .service('LanguageSelectService', function ($translate, LOCALES, $rootScope) {
     'use strict';
     // VARS
     var localesObj = LOCALES.locales;
@@ -41,22 +41,22 @@ angular.module('sharabelwasl')
     /**
      * Stop application loading animation when translations are loaded
      */
-    var $html = angular.element('html');
-    var LOADING_CLASS = 'app-loading';
+    // var $html = angular.element('html');
+    // var LOADING_CLASS = 'app-loading';
 
-    function startLoadingAnimation() {
-      $html.addClass(LOADING_CLASS);
-    }
+    // function startLoadingAnimation() {
+    //   $html.addClass(LOADING_CLASS);
+    // }
 
-    function stopLoadingAnimation() {
-      $html.removeClass(LOADING_CLASS);
-    }
+    // function stopLoadingAnimation() {
+    //   $html.removeClass(LOADING_CLASS);
+    // }
 
     // EVENTS
     $rootScope.$on('$translateChangeSuccess', function (event, data) {
       document.documentElement.setAttribute('lang', data.language);// sets "lang" attribute to html
 
-      tmhDynamicLocale.set(data.language.toLowerCase().replace(/_/g, '-'));// load Angular locale
+      // tmhDynamicLocale.set(data.language.toLowerCase().replace(/_/g, '-'));// load Angular locale
     });
 
     $rootScope.$on('$localeChangeSuccess', function () {

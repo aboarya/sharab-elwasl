@@ -1,36 +1,55 @@
-// /**
-//  * @ngdoc function
-//  * @name sharabelwasl.controller:DisplayController
-//  * @description
-//  * # DisplayController
-//  * Common application controller
-//  */
-// var sharabelwasl = angular.module('sharabelwasl');
+/**
+ * @ngdoc function
+ * @name sharabelwasl.controller:DisplayController
+ * @description
+ * # DisplayController
+ * Common application controller
+ */
+var sharabelwasl = angular.module('sharabelwasl');
 
-// angular.module('sharabelwasl').controller('AccordionDemoCtrl', function ($scope) {
-//   $scope.oneAtATime = true;
+angular.module('sharabelwasl').controller('DisplayController', function($window, $scope, $location, $anchorScroll) {
 
-//   $scope.groups = [
-//     {
-//       title: 'Dynamic Group Header - 1',
-//       content: 'Dynamic Group Body - 1'
-//     },
-//     {
-//       title: 'Dynamic Group Header - 2',
-//       content: 'Dynamic Group Body - 2'
-//     }
-//   ];
+        $scope.ids = ["search", "read", "extra", "what"];
+        
 
-//   $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+        $scope.moveToSection = function() {
 
-//   $scope.addItem = function() {
-//     var newItemNo = $scope.items.length + 1;
-//     $scope.items.push('Item ' + newItemNo);
-//   };
+            $scope.moved = false;
+            var windowHeight = angular.element($window).height();
 
-//   $scope.status = {
-//     isCustomHeaderOpen: false,
-//     isFirstOpen: true,
-//     isFirstDisabled: false
-//   };
-// });
+            for (key in $scope.ids) {
+            
+                var section = document.getElementById($scope.ids[key]);
+                var position = section.getBoundingClientRect().top;
+
+                
+                if (section.id == "search" && position > $scope.getMarker()) {
+                    $scope.scrollingUp = true;
+                } else if (section.id == "search" && position < $scope.getMarker()) {
+                    $scope.scrollingUp = false;
+                }
+                
+                if (position > 0 && position < windowHeight && !$scope.scrollingUp) {   
+                    $('html,body').animate({scrollTop: $("#"+section.id+"").offset().top},'slow'); 
+                    return;
+                } else if (position > 0 && $scope.scrollingUp) {
+                    $('html,body').animate({scrollTop: $("#"+$scope.ids[key-1]+"").offset().top},'slow');
+                    return;
+                }
+            }
+
+        }
+
+        $scope.setMarker = function() {
+            $scope.searchPosition = angular.element("section")[0].getBoundingClientRect().top;
+        }
+
+        $scope.getMarker = function() {
+            return $scope.searchPosition;
+        }
+
+        $scope.scroll = function() {
+            $scope.moveToSection();
+            $scope.setMarker();
+        }
+  });
