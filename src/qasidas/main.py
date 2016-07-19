@@ -3,7 +3,7 @@
 import sys
 import xml.etree.ElementTree
 from indexer import indexer
-from query import query
+# from query import query
 
 from translate.translate import GoogleTranslator
 

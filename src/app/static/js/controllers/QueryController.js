@@ -35,7 +35,7 @@ sharabelwasl.requests.search_callback = function($scope, data){
             }
         }
 
-        $('html,body').animate({scrollTop: $(angular.element('.read')).top}, 'slow'); 
+        $('html,body').animate({scrollTop: $(angular.element('#read')).offset().top}, 'slow'); 
 
     };
 

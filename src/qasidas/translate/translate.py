@@ -72,7 +72,7 @@ from urllib2 import HTTPRedirectHandler, HTTPDefaultErrorHandler, HTTPError
 
 ### Hard-coded variables ###
 
-api = ''
+api = 'AIzaSyBfYuSmSDH-5OqwK-lOOe1pUXnCrNx9LDY'
 
 languages = ["af", "sq", "ar","be", "bg", "ca", "zh-CN", "zh-TW", "hr",
              "cs", "da", "nl", "en", "et", "tl", "fi", "fr", "gl", "de",

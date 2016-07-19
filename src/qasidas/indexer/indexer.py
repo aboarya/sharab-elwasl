@@ -3,6 +3,7 @@
 import sys
 import elasticsearch
 import unicodedata
+import datetime
 import time
 import math
 
@@ -25,7 +26,7 @@ def get_attrs(filename, e):
     return elem.attrib['title'], int(elem.attrib['id']) - 1
 
 def index(index_name, es, title, txtNum, lineNum, body):
-    es.index(index=index_name, doc_type=title, id=txtNum, body=body)
+    es.index(index=index_name, doc_type='verse', id=txtNum, body=body)
 
 def _translate(target, lineText):
     try:
@@ -35,17 +36,18 @@ def _translate(target, lineText):
         return ""
 
 def _make_index(data):
+    added = time.mktime(datetime.datetime.now().timetuple()) * 1000
     return {
         'qasida_number' : data['qasida_number'],
         'title' : data['title'],
-        'ar__title' : data['title'],
-        'ar_title' : data['title_na'],
+        'ar_title' : data['title'],
+        'na_title' : data['title_na'],
         'en_title' : data['title_en'],
         'de_title' : data['title_de'],
         'nl_title' : data['title_nl'],
         'fr_title' : data['title_fr'],
 
-        'lineNum': data['txtNum'],
+        'line_number': data['txtNum'],
         'source': data['verse_clean'],
         
         'ar': data['lineText'],
@@ -62,6 +64,7 @@ def _make_index(data):
         'de_second' : data['de_second'],
         'fr_second': data['fr_second'],
         'nl_second': data['nl_second'],
+        'timestamp' : datetime.datetime.now()
     }
 
 def _process_verse(data, counter):
@@ -76,7 +79,7 @@ def _process_verse(data, counter):
     data['verse_second_na'] = remove_accents(second.decode(encoding)).encode(encoding)
                             
     for target in targets:
-        time.sleep(0.1)
+        time.sleep(0.3)
         data['%s_first'%target] = _translate(target, first)
         data['%s_second'%target] = _translate(target, second)
         if not isinstance(data['title_na'], int):
@@ -84,7 +87,7 @@ def _process_verse(data, counter):
         else:
             data['title_%s' % target] = data['title_na']
 
-    time.sleep(math.log(counter))
+    time.sleep(2*math.log(counter))
     print "indexing qasida line", counter
     index("sharab-elwasl", data['es'], data['title'],
         data['txtNum'], data['lineNum'], _make_index(data))
@@ -110,7 +113,7 @@ def create_index(directory, e):
         
         title_na = _process_title(title_na, number)
 
-        if number == 43: continue
+        # if number == 43: continue
         print "indexing qasida", title_na
 
         with open(directory+"/"+filename) as qasida:
