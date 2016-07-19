@@ -294,34 +294,34 @@ angular.module('sharabelwasl')
     }
 });
 
-angular.module('sharabelwasl')
-  .decorator('lxSearchFilterDirective', function($delegate){
+// angular.module('sharabelwasl')
+//   .decorator('lxSearchFilterDirective', function($delegate){
     
-    $delegate[0].scope.isOpen = '=';
+//     $delegate[0].scope.isOpen = '=';
   
-    console.log($delegate[0].scope);
+//     console.log($delegate[0].scope);
   
-    var originalLinkFn = $delegate[0].link;
+//     var originalLinkFn = $delegate[0].link;
   
-    $delegate[0].compile = function(tElem, tAttr) {
-      return function newLinkFn(scope, element, attrs, ctrl, transclude) {
-        originalLinkFn.apply($delegate[0], arguments);
+//     $delegate[0].compile = function(tElem, tAttr) {
+//       return function newLinkFn(scope, element, attrs, ctrl, transclude) {
+//         originalLinkFn.apply($delegate[0], arguments);
       
-        scope.$watch(function(){
-          return ctrl.isOpen;
-        }, function(newValue){
-          if (newValue) ctrl.openInput();
-          else ctrl.blurInput();
-        });
-      };
-    };
+//         scope.$watch(function(){
+//           return ctrl.isOpen;
+//         }, function(newValue){
+//           if (newValue) ctrl.openInput();
+//           else ctrl.blurInput();
+//         });
+//       };
+//     };
   
-    // get rid of the old link function since we return a link function in compile
-    delete $delegate[0].link;
+//     // get rid of the old link function since we return a link function in compile
+//     delete $delegate[0].link;
 
-    // return the $delegate
-    return $delegate;
-});
+//     // return the $delegate
+//     return $delegate;
+// });
 
 angular.module('sharabelwasl')
   .directive('loading',   ['$http' ,function ($http)
