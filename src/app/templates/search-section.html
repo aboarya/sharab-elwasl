@@ -8,48 +8,24 @@
     <div class="col-xs-12 vcenter">
       <form class="form-inline">
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+          <input type="text" ng-model="vm.query.term" class="form-control" placeholder='{a "content.search.tip" | translate a}'>
         </div>
+        <div class="btn-group">
+          <button ng-click="vm.search($event)" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            {a "content.search.placeholder" | translate a}
+          </button>
+        </div>
+      <div class="btn-group" uib-dropdown keyboard-nav>
+        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            {a "content.search.popularLabel" | translate a} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+            <li role="menuitem"><a href="#" ng-click="vm.popular_search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
+            <li role="menuitem"><a href="#" ng-click="vm.popular_search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
+            <li role="menuitem"><a href="#" ng-click="vm.popular_search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
+        </ul>
+    </div>
       </form>
     </div>
   </div>
 </div>
-    {#
-    <div class="outer">
-      <div class="middle">
-        <div class="inner">
-          <img src="/static/img/search-logo.png"/>
-          <form class="rd-mailform search-form">
-            <div >
-              <div >
-                <div class="card" >
-                  {#<div class="toolbar" >
-                    <span ng-click="toggleSearch()" class="toolbar__label fs-title ml black__text" style="color: #9e9e9e;">{a "content.search.tip" | translate a}</span>
-                    <div class="toolbar__right">
-                      <lx-search-filter lx-width="400" lx-closed="true" is-open="isSearchOpen">
-                        <input type="text" ng-model="vm.searchFilter.third">
-                      </lx-search-filter>
-                       <lx-dropdown lx-position="right" lx-over-toggle="true">
-                          <lx-dropdown-toggle>
-                            <lx-button lx-size="l" lx-color="black" lx-type="icon"><i class="mdi mdi-apps"></i></lx-button>
-                          </lx-dropdown-toggle>
-                          <lx-dropdown-menu>
-                            <ul >
-                              <li><a class="dropdown-link dropdown-link--is-header" >{a "content.search.popularLabel" | translate a}</a></li>
-                              <li><a class="dropdown-link" ng-click="search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
-                              <li><a class="dropdown-link" ng-click="search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
-                              <li><a class="dropdown-link" ng-click="search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
-                            </ul>
-                          </lx-dropdown-menu>
-                        </lx-dropdown>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>#}
-  

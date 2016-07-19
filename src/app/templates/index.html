@@ -29,7 +29,7 @@
 
   </head>
 
-  <body ng-controller="QueryController">
+  <body ng-controller="QueryController as vm">
    
     {#<div ng-include src="'/partial/navbar'"></div>#}
     <div class="container-fluid">
@@ -86,8 +86,6 @@
     
     <script src="/static/js/app.js"></script>
     <script src="/static/js/services/LangaugeSelectService.js"></script>
-    
-    
     <script src="/static/js/controllers/QueryController.js"></script>
     <script src="/static/js/controllers/LanguageController.js"></script>
     
