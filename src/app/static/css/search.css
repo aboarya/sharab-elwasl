@@ -1,63 +1,13 @@
-@font-face {
-    font-family: Diwanltr;
-    src: url('../fonts/Diwanltr.ttf');
+#search {
+  background-image: url(/static/img/lantern.jpg);background-repeat: no-repeat;
+  background-position: center center;background-attachment: fixed;
+  -webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;
+  background-size: cover;
+
+}
+.full-page {
+  height:100vh;min-height:100vh;
+  
 }
 
-#search{
-    width: 100%;
-    background-size: 100% 100%;
-} 
-
-
-.square { width: 50%; height: 50%; float: left; }
-#verse { 
-    display: flex;
-justify-content: center; /* align horizontal */
-align-items: center; /* align vertical */
-}
-#textfield {
-    display: flex;
-justify-content: center; /* align horizontal */
-align-items: center; /* align vertical */
-}
-
-
-.diwanltr {
-    font-family: Diwanltr;
-}
-
-.diwanltr .diwanltr-menu {
-    font-size: 18px;
-    margin-right:35px;
-    padding-top: 9px;
-}
-
-.outer {
-    display: table;
-    position: absolute;
-    height: 110%;
-    width: 100%;
-    text-align: center;
-    margin-top: 85px;
-    
-}
-
-.middle {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.inner {
-    position: relative;
-    top: 40%;
-    transform: translateY(-50%);
-    display: block;
-    margin: auto;
-    width: 40%;
-}
-
-
-.search-form {
-    padding-top: 25px;
-    width: 100%;
-}
+.vcenter {/*padding: 30px;*/}

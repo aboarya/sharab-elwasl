@@ -12,8 +12,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="css/normalize.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    {#<link rel="stylesheet" href="css/normalize.min.css">}#}
+    
 
     
 
@@ -21,8 +21,8 @@
     <title>Bootstrap</title>
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/search.css">
     
-    {#<link rel="stylesheet" href="/static/css/search.css">#}
         
 
     
@@ -31,9 +31,9 @@
 
   <body ng-controller="QueryController">
    
-    <div ng-include src="'/partial/navbar'"></div>
-    <div class="container">
-      <div ng-include  ng-include src="'/partial/search-section'"></div>
+    {#<div ng-include src="'/partial/navbar'"></div>#}
+    <div class="container-fluid">
+      <div id="search"  ng-include src="'/partial/search-section'"></div>
       <hr>
 
       <footer>

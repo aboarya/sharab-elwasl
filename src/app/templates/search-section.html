@@ -1,35 +1,25 @@
-<style>
-  #search {
-  /* Location of the image */
-  /*background-image: url(/static/img/lantern.jpg);*/
-  
-  /* Image is centered vertically and horizontally at all times */
-  background-position: center center;
-  
-  /* Image doesn't repeat */
-  background-repeat: no-repeat;
-  
-  /* Makes the image fixed in the viewport so that it doesn't move when 
-     the content height is greater than the image height */
-  background-attachment: fixed;
-  
-  /* This is what makes the background image rescale based on its container's size */
-  background-size: cover;
-  
-  /* Pick a solid background color that will be displayed while the background image is loading */
-  background-color:#464646;
-  
-  height:100vh;
-  min-height:100vh;
-}
-
-</style>
-<section id="search">
+<div class="row full-page">
+  <div class="row">
+    <div class="col-xs-12 vcenter">
+      <img src="/static/img/search-logo.png" class="" style="margin: 0 auto;"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 vcenter">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
     {#
     <div class="outer">
       <div class="middle">
         <div class="inner">
-          <img src="/static/img/search-logo.png" style="display: inline"/>
+          <img src="/static/img/search-logo.png"/>
           <form class="rd-mailform search-form">
             <div >
               <div >
@@ -62,4 +52,4 @@
         </div>
       </div>
     </div>#}
-  </section>
+  
