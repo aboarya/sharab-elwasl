@@ -57,16 +57,18 @@ angular.module('sharabelwasl')
 
     vm.search_callback = function(data) {
 
-      vm.current_page = 0, vm.paged_items = [], vm.titles = [], vm.hgt = 100;
-      vm.lang_first = vm.current_lang+"_first";
-      vm.lang_second = vm.current_lang+"_second";
-      
+      vm.current_qasida = 0, vm.current_verse = 0, vm.qasidas = [];
+      vm.verses = [], vm.titles = [], vm.hgt = 100;
+
+      vm.lang_first = vm.get_current_lang()+"_first";
+      vm.lang_second = vm.get_current_lang()+"_second";
+
       for (var i=0; i < data.length; i++) {
 
-        vm.paged_items[i] = data[i];
+        vm.qasidas[i] = data[i];
 
         for (var title in data[i]) {
-
+          vm.verses[i] = vm.qasidas[i][title];
           var hgt = Math.floor(20*data[i][title].length);
 
           if (hgt > vm.hgt) {vm.hgt = hgt;}
@@ -79,20 +81,36 @@ angular.module('sharabelwasl')
 
     };
 
-    vm.prev_page = function () {
-        if (vm.current_page > 0) {
-            vm.current_page--;
+    vm.prev_qasida = function () {
+        if (vm.current_qasida > 0) {
+            vm.current_qasida--;
         }
     };
     
-    vm.next_page = function () {
-        if (vm.current_page < vm.paged_items.length - 1) {
-            vm.current_page++;
+    vm.next_qasida = function () {
+        if (vm.current_qasida < vm.qasidas.length - 1) {
+            vm.current_qasida++;
         }
     };
     
-    vm.set_page = function () {
-        vm.current_page = this.n;
+    vm.set_qaisda = function () {
+        vm.current_qasida = this.n;
+    };
+
+    vm.prev_verse = function () {
+        if (vm.current_qasida > 0) {
+            vm.current_qasida--;
+        }
+    };
+    
+    vm.next_verse = function () {
+        if (vm.current_qasida < vm.qasidas.length - 1) {
+            vm.current_qasida++;
+        }
+    };
+    
+    vm.set_verse = function () {
+        vm.current_qasida = this.n;
     };
     
 });

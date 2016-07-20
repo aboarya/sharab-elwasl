@@ -1,27 +1,46 @@
-
+<style type="text/css">
+  .space {height:75px;}
+  .latin {font-size:20px;}
 </style>
+
 <div class="row">
   <div class="col-xs-3"><img src="/static/img/maqam-resized.png"/></div>
-  <div class="col-xs-1" style="">&nbsp;</div>
-  <div class="col-xs-8" style="">
-    <div class="col-xs-12" ng-repeat="(title, group) in vm.paged_items[vm.current_page]">
+  
+  <div class="col-xs-9" style="">
+    <div class="col-xs-12" ng-repeat="(title, verses) in vm.qasidas[vm.current_qasida]">
       <div class="row"><div class="col-xs-12 text-center"><div class="col-24"> {a title a}</div></div></div>
       <div class="row">
-        <div class="col-xs-12" ng-repeat="verse in group | orderBy:'line_number'" >
-          <div class="row">
-              <div class="col-xs-1 text-center">{a verse['line_number'] a}</div>
+          <!-- <div class="col-xs-12" ng-repeat="verse in group | orderBy:'line_number'" > -->
+          <div class="row space">
+              <div class="col-xs-1 text-center">{a verses[vm.current_verse]['line_number'] a}</div>
               <div class="col-xs-1 text-center">icon 1</div>
               <div class="col-xs-1 text-center">icon 2</div>
-              <div class="col-xs-4 text-center lead"><big>{a verse['ar_second'] a}</big></div>
-              <div class="col-xs-4 text-center lead"><big>{a verse['ar_first'] a}</big></div>
+              <div class="col-xs-4 text-center lead"><big>{a verses[vm.current_verse]['ar_second'] a}</big></div>
+              <div class="col-xs-4 text-center lead"><big>{a verses[vm.current_verse]['ar_first'] a}</big></div>
           </div>
-        </div>
+          <div class="row space">
+              <div class="col-xs-1 text-center">&nbsp;</div>
+              <div class="col-xs-1 text-center">&nbsp;</div>
+              <div class="col-xs-1 text-center">&nbsp;</div>
+              <div class="col-xs-4 text-center latin">{a verses[vm.current_verse][vm.lang_first] a}</div>
+              <div class="col-xs-4 text-center latin">{a verses[vm.current_verse][vm.lang_second] a}</div>
+          </div>
+          <div class="row space">
+            <div class="col-xs-12">
+              <ul class="list-unstyled">
+                <li class="col-xs-1"><a href >P </a></li>
+                <li class="col-xs-1" ng-repeat="n in range(verses.length)"   ><a href >{a n a}</a></li>
+                <li class="col-xs-1"><a href >N</a></li>
+              </ul>
+            </div>  
+          </div>
+        <!-- </div> -->
       </div>
       <div class="row">
         <div class="col-xs-12">
           <ul class="list-unstyled">
             <li class="col-xs-2"><a href ng-click="vm.prev_page()">« Prev </a></li>
-            <li class="col-xs-2" ng-repeat="n in range(vm.paged_items.length)"  ng-click="vm.set_page()" ><a href >{a vm.titles[n] a}</a></li>
+            <li class="col-xs-2" ng-repeat="n in range(vm.qasidas.length)"  ng-click="vm.set_page()" ><a href >{a vm.titles[n] a}</a></li>
             <li class="col-xs-2"><a href ng-click="vm.next_page()">Next »</a></li>
           </ul>
         </div>  
@@ -36,7 +55,7 @@
   <div class="col-1" style="">&nbsp;</div>
   <div class="col-13" style="">
     <div class="col-24">
-      <div class="col-24" ng-repeat="(title, group) in vm.paged_items[vm.current_page]">
+      <div class="col-24" ng-repeat="(title, group) in vm.qasidas[vm.current_page]">
         <div class="col-24"><div class="col-24"> {a title a}</div></div>
         <div class="col-24" ng-repeat="verse in group | orderBy:'line_number'" id="{a current_lang a}_{a verse['qasida_number'] a}_{a verse['line_number'] a}" loading>
           <div class="break"></div>
@@ -123,7 +142,7 @@
     <div class="col-24">
       <ul>
         <li class="col-2"><a href ng-click="prevPage()">« Prev </a></li>
-        <li class="col-2" ng-repeat="n in range(vm.paged_items.length)"  ng-click="setPage()" ><a href >{a titles[n] a}</a></li>
+        <li class="col-2" ng-repeat="n in range(vm.qasidas.length)"  ng-click="setPage()" ><a href >{a titles[n] a}</a></li>
         <li class="col-2"><a href ng-click="nextPage()">Next »</a></li>
       </ul>
     </div>  

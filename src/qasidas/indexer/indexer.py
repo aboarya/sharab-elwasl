@@ -32,8 +32,8 @@ def _translate(target, lineText):
     try:
         return translator.translate(lineText, source="ar", target=target)[0]['translatedText']
     except KeyError as e:
-        raise e
-        return ""
+        print 'error in translating {} to {} '.format(lineText, target), 
+        return "error"
 
 def _make_index(data):
     added = time.mktime(datetime.datetime.now().timetuple()) * 1000
