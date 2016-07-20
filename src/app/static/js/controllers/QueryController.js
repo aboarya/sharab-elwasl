@@ -68,7 +68,7 @@ angular.module('sharabelwasl')
         vm.qasidas[i] = data[i];
 
         for (var title in data[i]) {
-          vm.verses[i] = vm.qasidas[i][title];
+          
           var hgt = Math.floor(20*data[i][title].length);
 
           if (hgt > vm.hgt) {vm.hgt = hgt;}
@@ -98,19 +98,35 @@ angular.module('sharabelwasl')
     };
 
     vm.prev_verse = function () {
-        if (vm.current_qasida > 0) {
-            vm.current_qasida--;
+        if (vm.current_verse > 0) {
+            vm.current_verse--;
         }
     };
     
     vm.next_verse = function () {
-        if (vm.current_qasida < vm.qasidas.length - 1) {
-            vm.current_qasida++;
+      for (title in vm.qasidas[vm.current_qasida])
+      {
+        if (vm.current_verse < vm.qasidas[vm.current_qasida][title].length - 1) {
+            vm.current_verse++;
         }
+      }
+        
     };
     
-    vm.set_verse = function () {
-        vm.current_qasida = this.n;
+    vm.set_verse = function (n) {
+        vm.current_verse = n;
+    };
+
+    vm.range = function (start, end) {
+        var ret = [];
+        if (!end) {
+            end = start;
+            start = 0;
+        }
+        for (var i = start; i < end; i++) {
+            ret.push(i);
+        }
+        return ret;
     };
     
 });

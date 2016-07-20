@@ -1,53 +1,87 @@
 <style type="text/css">
-  .space {height:75px;}
+  .space {height:100px;}
   .latin {font-size:20px;}
-</style>
-
-<div class="row">
-  <div class="col-xs-3"><img src="/static/img/maqam-resized.png"/></div>
+  [class^="col-"],[class*=" col-"] {padding-left:0px;padding-right:0px;}
   
-  <div class="col-xs-9" style="">
-    <div class="col-xs-12" ng-repeat="(title, verses) in vm.qasidas[vm.current_qasida]">
-      <div class="row"><div class="col-xs-12 text-center"><div class="col-24"> {a title a}</div></div></div>
-      <div class="row">
-          <!-- <div class="col-xs-12" ng-repeat="verse in group | orderBy:'line_number'" > -->
-          <div class="row space">
-              <div class="col-xs-1 text-center">{a verses[vm.current_verse]['line_number'] a}</div>
-              <div class="col-xs-1 text-center">icon 1</div>
-              <div class="col-xs-1 text-center">icon 2</div>
-              <div class="col-xs-4 text-center lead"><big>{a verses[vm.current_verse]['ar_second'] a}</big></div>
-              <div class="col-xs-4 text-center lead"><big>{a verses[vm.current_verse]['ar_first'] a}</big></div>
-          </div>
-          <div class="row space">
-              <div class="col-xs-1 text-center">&nbsp;</div>
-              <div class="col-xs-1 text-center">&nbsp;</div>
-              <div class="col-xs-1 text-center">&nbsp;</div>
-              <div class="col-xs-4 text-center latin">{a verses[vm.current_verse][vm.lang_first] a}</div>
-              <div class="col-xs-4 text-center latin">{a verses[vm.current_verse][vm.lang_second] a}</div>
-          </div>
-          <div class="row space">
-            <div class="col-xs-12">
-              <ul class="list-unstyled">
-                <li class="col-xs-1"><a href >P </a></li>
-                <li class="col-xs-1" ng-repeat="n in range(verses.length)"   ><a href >{a n a}</a></li>
-                <li class="col-xs-1"><a href >N</a></li>
-              </ul>
-            </div>  
-          </div>
-        <!-- </div> -->
+</style>
+  
+<div class="col-md-9" style="background-color:orange;overflow:auto;">
+  <div class="row"><div class="col-xs-12">{a title a}</div></div>
+  <div class="row" class="col-xs-12" ng-repeat="(title, verses) in vm.qasidas[vm.current_qasida]" style="background-color:red;">
+    <div class="row space" style="background-color:green">
+      <div class="col-sm-6 text-center lead vcenter" style="background-color:lightcyan;">{a verses[vm.current_verse]['ar_second'] a}
       </div>
-      <div class="row">
+      <div class="col-sm-6 text-center lead vcenter" style="background-color:lightgray;">{a verses[vm.current_verse]['ar_first'] a}</div>
+    </div>
+    <div class="row space" style="background-color:yellow">
+      <div class="col-sm-6 text-center lead vcenter" style="background-color:lightgray;">{a verses[vm.current_verse][vm.lang_first] a}
+      </div>
+      <div class="col-sm-6 text-center lead vcenter" style="background-color:lightcyan;">{a verses[vm.current_verse][vm.lang_second] a}</div>
+    </div>
+    <div class="row space">
+      <div class="col-xs-12 text-center col-xs-offset-3 vcenter">
+        <ul class="list-unstyled" style="background-color:orange;">
+          <li class="col-xs-1 text-center"><a href ng-click="vm.prev_verse()">« Prev </a></li>
+          <li class="col-xs-1 text-center" ng-repeat="n in vm.range(verses.length)" ng-click="vm.set_verse(n)">
+            <a href >{a verses[n]['line_number'] a}</a>
+          </li>
+          <li class="col-xs-1 text-center"><a href ng-click="vm.next_verse()">Next »</a></li>
+        </ul>
+      </div> 
+  </div>
+  </div>
+</div>
+<div class="hidden-xs col-md-3 text-center" style="background-color:red;"><img src="/static/img/maqam-resized.png"/></div>
+
+
+
+
+      {#<div >
+      <div class="row-fluid"><div class="col-xs-12 "><div class="col-24"> {a title a}</div></div></div>
+      <div class="row-fluid">
+        <div class="row space">
+            <div class="col-xs-6 text-center lead"><big>{a verses[vm.current_verse]['ar_second'] a}</big></div>
+            <div class="col-xs-6 text-center lead"><big>{a verses[vm.current_verse]['ar_first'] a}</big></div>
+        </div>
+        <div class="row space">
+            <div class="col-xs-6 text-center latin">{a verses[vm.current_verse][vm.lang_first] a}</div>
+            <div class="col-xs-6 text-center latin">{a verses[vm.current_verse][vm.lang_second] a}</div>
+        </div>
+        <div class="row space">
+          <div class="col-xs-12">
+            <ul class="list-unstyled">
+              <li class="col-xs-1"><a href ng-click="vm.prev_verse()">« Prev </a></li>
+              <li class="col-xs-1" ng-repeat="n in vm.range(verses.length)" ng-click="vm.set_verse(n)"><a href >{a verses[n]['line_number'] a}</a></li>
+              <li class="col-xs-1"><a href ng-click="vm.next_verse()">Next »</a></li>
+            </ul>
+          </div>  
+        </div>
+      </div>
+      <div class="row-fluid">
         <div class="col-xs-12">
           <ul class="list-unstyled">
             <li class="col-xs-2"><a href ng-click="vm.prev_page()">« Prev </a></li>
-            <li class="col-xs-2" ng-repeat="n in range(vm.qasidas.length)"  ng-click="vm.set_page()" ><a href >{a vm.titles[n] a}</a></li>
+            <li class="col-xs-2" ng-repeat="n in vm.range(vm.qasidas.length)"  ng-click="vm.set_page()" ><a href >{a vm.titles[n] a}</a></li>
             <li class="col-xs-2"><a href ng-click="vm.next_page()">Next »</a></li>
           </ul>
         </div>  
       </div>
-     </div>
+     </div>#}
+  
+
+
+{#
+<div class="row">
+    <div class="col-sm-8" style="background-color:lavender;">.col-sm-8
+      <div class="row">
+        <div class="col-sm-6" style="background-color:lightcyan;">.col-sm-6</div>
+        <div class="col-sm-6" style="background-color:lightgray;">.col-sm-6</div>
+      </div>
+    </div>
+    <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
   </div>
-</div>
+  #}
+
 {#<div class="results" >
   <div class="col-9">
     <div><img src="/static/img/maqam-resized.png"/></div>
