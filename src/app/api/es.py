@@ -4,8 +4,8 @@ from collections import defaultdict
 def group(es_results):
     keys = ['ar_title', 'de_first','de_second', 'de_title', 'en_first',
         'en_second', 'en_title', 'fr_first', 'fr_second',
-        'fr_title', 'lineNum', 'nl_first', 'nl_second',
-        'nl_title', 'qasida_number','ar_first','ar_second', 'lineNum']
+        'fr_title', 'nl_first', 'nl_second',
+        'nl_title', 'qasida_number','ar_first','ar_second', 'line_number']
 
     results = defaultdict(list)
     for result in es_results:

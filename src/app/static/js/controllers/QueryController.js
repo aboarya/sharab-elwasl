@@ -35,7 +35,7 @@ angular.module('sharabelwasl')
     vm.execute_search = function(term) {
       var path = '/search/'+vm.get_current_lang()+'/'+term;
       $location.path(path);
-      vm.ajax(path, function(){});
+      vm.ajax(path, vm.search_callback);
     }
 
     vm.user_search = function() {
@@ -57,42 +57,42 @@ angular.module('sharabelwasl')
 
     vm.search_callback = function(data) {
 
-      vm.currentPage = 0, vm.pagedItems = [], vm.titles = [], vm.hgt = 100;
-      vm.lang_first = $scope.current_lang+"_first";
-      vm.lang_second = $scope.current_lang+"_second";
-
+      vm.current_page = 0, vm.paged_items = [], vm.titles = [], vm.hgt = 100;
+      vm.lang_first = vm.current_lang+"_first";
+      vm.lang_second = vm.current_lang+"_second";
+      
       for (var i=0; i < data.length; i++) {
 
-        vm.pagedItems[i] = data[i];
+        vm.paged_items[i] = data[i];
 
         for (var title in data[i]) {
 
           var hgt = Math.floor(20*data[i][title].length);
 
           if (hgt > vm.hgt) {vm.hgt = hgt;}
-          if (obj.hasOwnProperty(title)) {vm.titles.push(title);}
+          if (data[i].hasOwnProperty(title)) {vm.titles.push(title);}
 
         }
       }
 
-      $('html,body').animate({scrollTop: $(angular.element('#read')).offset().top}, 'slow'); 
+      // $('html,body').animate({scrollTop: $(angular.element('#read')).offset().top}, 'slow'); 
 
     };
 
     vm.prev_page = function () {
-        if (vm.currentPage > 0) {
-            vm.currentPage--;
+        if (vm.current_page > 0) {
+            vm.current_page--;
         }
     };
     
     vm.next_page = function () {
-        if (vm.currentPage < $scope.pagedItems.length - 1) {
-            vm.currentPage++;
+        if (vm.current_page < vm.paged_items.length - 1) {
+            vm.current_page++;
         }
     };
     
-    $scope.set_page = function () {
-        vm.currentPage = this.n;
+    vm.set_page = function () {
+        vm.current_page = this.n;
     };
     
 });

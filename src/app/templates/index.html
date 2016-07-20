@@ -13,19 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {#<link rel="stylesheet" href="css/normalize.min.css">}#}
-    
 
-    
-
-    
     <title>Bootstrap</title>
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/search.css">
-    
-        
-
-    
 
   </head>
 
@@ -34,6 +26,8 @@
     {#<div ng-include src="'/partial/navbar'"></div>#}
     <div class="container-fluid">
       <div id="search"  ng-include src="'/partial/search-section'"></div>
+      <hr>
+      <div id="reaad" ng-style="{height: vm.hgt+ 'vh'}"   ng-include src="'/partial/results-section'"></div>
       <hr>
 
       <footer>

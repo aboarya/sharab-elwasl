@@ -1,0 +1,133 @@
+
+</style>
+<div class="row">
+  <div class="col-xs-3"><img src="/static/img/maqam-resized.png"/></div>
+  <div class="col-xs-1" style="">&nbsp;</div>
+  <div class="col-xs-8" style="">
+    <div class="col-xs-12" ng-repeat="(title, group) in vm.paged_items[vm.current_page]">
+      <div class="row"><div class="col-xs-12 text-center"><div class="col-24"> {a title a}</div></div></div>
+      <div class="row">
+        <div class="col-xs-12" ng-repeat="verse in group | orderBy:'line_number'" >
+          <div class="row">
+              <div class="col-xs-1 text-center">{a verse['line_number'] a}</div>
+              <div class="col-xs-1 text-center">icon 1</div>
+              <div class="col-xs-1 text-center">icon 2</div>
+              <div class="col-xs-4 text-center lead"><big>{a verse['ar_second'] a}</big></div>
+              <div class="col-xs-4 text-center lead"><big>{a verse['ar_first'] a}</big></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <ul class="list-unstyled">
+            <li class="col-xs-2"><a href ng-click="vm.prev_page()">« Prev </a></li>
+            <li class="col-xs-2" ng-repeat="n in range(vm.paged_items.length)"  ng-click="vm.set_page()" ><a href >{a vm.titles[n] a}</a></li>
+            <li class="col-xs-2"><a href ng-click="vm.next_page()">Next »</a></li>
+          </ul>
+        </div>  
+      </div>
+     </div>
+  </div>
+</div>
+{#<div class="results" >
+  <div class="col-9">
+    <div><img src="/static/img/maqam-resized.png"/></div>
+  </div>
+  <div class="col-1" style="">&nbsp;</div>
+  <div class="col-13" style="">
+    <div class="col-24">
+      <div class="col-24" ng-repeat="(title, group) in vm.paged_items[vm.current_page]">
+        <div class="col-24"><div class="col-24"> {a title a}</div></div>
+        <div class="col-24" ng-repeat="verse in group | orderBy:'line_number'" id="{a current_lang a}_{a verse['qasida_number'] a}_{a verse['line_number'] a}" loading>
+          <div class="break"></div>
+          <div class="verse">
+            <div class="col-3">
+              <div class="col-8">{a verse['line_number'] a}</div>
+              <div class="col-8"><lx-button lx-ripple lx-tooltip="Tooltip" lx-tooltip-position="bottom" lx-size="m" lx-color="blue-grey" lx-type="icon">
+                <i class="mdi mdi-tooltip-text"></i>
+              </lx-button></div>
+              <div class="col-8">
+                <lx-button ng-show="!is_showing(verse['qasida_number'], verse['line_number'])" lx-ripple lx-size="m" lx-color="green" lx-type="icon" ng-click="getUserTranslations(verse['qasida_number'],verse['line_number'])"><i class="mdi mdi-plus-circle"></i></lx-button>
+              </div>
+              <div class="col-6"><lx-button ng-model="show_translation" ng-show="is_showing(verse['qasida_number'], verse['line_number'])" lx-ripple lx-size="m" lx-color="red" lx-type="icon" ng-click="removeUserTranslations(verse['qasida_number'],verse['line_number'])"><i class="mdi mdi-minus-circle"></i></lx-button></div>
+            </div>
+            <div class="col-9">{a verse['ar_second'] a} </div>
+            <div class="col-9">{a verse['ar_first'] a}</div>
+          </div>
+          <div class="verse">
+            <div class="col-3">&nbsp;</div>
+            <div class="col-9">{a verse[lang_first] a}</div>
+            <div class="col-9">{a verse[lang_second] a} </div>
+          </div>
+          <div ng-show="is_showing(verse['qasida_number'], verse['line_number'])" class="ng-hide">
+            <div ng-repeat="translation in translations" class="col-24">
+              <div class="verse" >
+                <div class="col-3">
+                  <div ng-show="$last" class="col-8">
+                    <lx-button lx-ripple lx-size="m" lx-color="blue-grey" lx-type="icon" ng-click="showUserInput(verse['qasida_number'], verse['line_number'])"><i class="mdi mdi-book-open"></i></lx-button>
+                  </div>
+                  <div class="col-8" ng-show="!$last">&nbsp;</div>
+                  <div class="col-8">
+                    <lx-button lx-ripple lx-size="m" lx-color="red" lx-type="icon" ng-click="voteDown(translation.translation_id, translation['qasida_number'], translation['line_number'])">
+                    <i class="mdi mdi-thumb-down-outline">
+                      <span class="small-text">{a translation['num_down_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                  <div class="col-8">
+                  <lx-button lx-ripple  lx-size="m" lx-color="blue" lx-type="icon" ng-click="voteUp(translation.translation_id, translation['qasida_number'], translation['line_number'])">
+                    <i class="mdi mdi-thumb-up">
+                      <span class="small-text">{a translation['num_up_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                </div>
+                <div class="col-9">{a translation['first_user_translation'] a}</div>
+                <div class="col-9">{a translation['second_user_translation'] a}</div>
+              </div>
+            </div>
+            <div class="col-24" ng-show="is_showing(verse['qasida_number'], verse['line_number'], 'user')" class="ng-hide">
+                <div class="col-3">
+                  <div class="col-8">
+                    &nbsp;
+                  </div>
+                  <div class="col-8"  >
+                    <lx-button lx-ripple lx-size="m" lx-color="red" lx-type="icon" ng-click="closeUserInput();">
+                    <i class="mdi mdi-close-circle">
+                      <span class="small-text">{a translation['num_down_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                  <div class="col-8"  class="user-input">
+                    <lx-button lx-ripple lx-size="m" lx-color="green" lx-type="icon" ng-click="saveUserTranslation(verse.qasida_number, verse.line_number);">
+                    <i class="mdi mdi-content-save">
+                      <span class="small-text">{a translation['num_down_votes'] a}</span>
+                    </i>
+                  </lx-button>
+                  </div>
+                </div>
+                <div class="col-9">
+                  <lx-text-field lx-label="Enter Your Translation" lx-allow-clear="true" >
+                    <input type="text" ng-model="user_t.user_first" >
+                  </lx-text-field>
+                </div>
+                <div class="col-9">
+                  <lx-text-field lx-label="Enter Your Translation" lx-allow-clear="true" >
+                    <input type="text" ng-model="user_t.user_second">
+                  </lx-text-field>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-24">
+      <ul>
+        <li class="col-2"><a href ng-click="prevPage()">« Prev </a></li>
+        <li class="col-2" ng-repeat="n in range(vm.paged_items.length)"  ng-click="setPage()" ><a href >{a titles[n] a}</a></li>
+        <li class="col-2"><a href ng-click="nextPage()">Next »</a></li>
+      </ul>
+    </div>  
+  </div>
+  </div>
+  <div class="col-1" style="background-color:blue">&nbsp;</div>
+</div>#}
