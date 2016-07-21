@@ -17,7 +17,7 @@
     <title>Bootstrap</title>
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/search.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 
   </head>
 
@@ -25,19 +25,14 @@
    
     {#<div ng-include src="'/partial/navbar'"></div>#}
     <div class="container-fluid">
-      <div id="search"  ng-include src="'/partial/search-section'" class="row"></div>
+      <ng-include src="vm.query.template_url"></ng-include>
+      
+      {#<div id="search"  ng-include src="query.template_url" class="row"></div><hr><div id="reaad" ng-style="{height: vm.hgt+ 'vh'}"  ng-include src="'/partial/results-section'" class="row"></div>#}
       <hr>
-      <div id="reaad" ng-style="{height: vm.hgt+ 'vh'}"   ng-include src="'/partial/results-section'" class="row"></div>
-      <hr>
-
       <footer>
         <p>&copy; Company 2015</p>
       </footer>
-
     </div>
-
-
-
     {#<div ng-include  ng-include src="'/partial/sidebar'"></div>#}
     <!-- The Main Wrapper -->
     {#<div class="page text-center content ng-scope" >

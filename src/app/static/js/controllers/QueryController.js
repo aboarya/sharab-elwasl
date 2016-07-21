@@ -12,7 +12,7 @@ angular.module('sharabelwasl')
   .controller('QueryController', function($scope, $location, $http, $translateLocalStorage) {
 
     var vm = this;
-    vm.query = {"term" : ""};
+    vm.query = {"term" : "", "template_url" : "/partial/search-section"};
 
     vm.get_current_lang = function() {
       return $translateLocalStorage.get();
@@ -34,7 +34,7 @@ angular.module('sharabelwasl')
 
     vm.execute_search = function(term) {
       var path = '/search/'+vm.get_current_lang()+'/'+term;
-      $location.path(path);
+      $location.url(path);
       vm.ajax(path, vm.search_callback);
     }
 
@@ -48,7 +48,7 @@ angular.module('sharabelwasl')
 
     vm.search = function(obj) {
 
-      if (typeof obj === 'undefined') {
+      if (typeof obj == 'undefined') {
         vm.user_search();
       } else {
         vm.popular_search(obj);
@@ -59,6 +59,7 @@ angular.module('sharabelwasl')
 
       vm.current_qasida = 0, vm.current_verse = 0, vm.qasidas = [];
       vm.verses = [], vm.titles = [], vm.hgt = 100;
+      vm._next_qasida = 1, vm._prev_qasida = -1;
 
       vm.lang_first = vm.get_current_lang()+"_first";
       vm.lang_second = vm.get_current_lang()+"_second";
@@ -76,21 +77,27 @@ angular.module('sharabelwasl')
 
         }
       }
-
+      vm.query.template_url = '/partial/results-section'
       // $('html,body').animate({scrollTop: $(angular.element('#read')).offset().top}, 'slow'); 
 
     };
 
     vm.prev_qasida = function () {
-        if (vm.current_qasida > 0) {
-            vm.current_qasida--;
-        }
+      vm.current_verse = 0;
+      if (vm.current_qasida > 0) {
+        vm.current_qasida--;
+        vm._next_qasida--;
+        vm._prev_qasida--;
+      }
     };
     
     vm.next_qasida = function () {
-        if (vm.current_qasida < vm.qasidas.length - 1) {
-            vm.current_qasida++;
-        }
+      vm.current_verse = 0;
+      if (vm.current_qasida < vm.qasidas.length - 1) {
+          vm.current_qasida++;
+          vm._next_qasida++;
+          vm._prev_qasida++;
+      }
     };
     
     vm.set_qaisda = function () {

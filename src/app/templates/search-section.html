@@ -1,4 +1,4 @@
-<div class="row full-page">
+<div id="search" class="row full-page">
   <div class="row-fluid">
     <div class="col-xs-12 vcenter">
       <img src="/static/img/search-logo.png" class="" style="margin: 0 auto;"/>
@@ -11,7 +11,7 @@
           <input type="text" ng-model="vm.query.term" class="form-control" placeholder='{a "content.search.tip" | translate a}'>
         </div>
         <div class="btn-group">
-          <button ng-click="vm.search($event)" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+          <button ng-click="vm.search()" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
             {a "content.search.placeholder" | translate a}
           </button>
         </div>
@@ -20,12 +20,12 @@
             {a "content.search.popularLabel" | translate a} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-            <li role="menuitem"><a href="#" ng-click="vm.popular_search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
-            <li role="menuitem"><a href="#" ng-click="vm.popular_search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
-            <li role="menuitem"><a href="#" ng-click="vm.popular_search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
+            <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
+            <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
+            <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
         </ul>
     </div>
-      </form>
+    </form>
     </div>
   </div>
 </div>
