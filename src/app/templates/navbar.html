@@ -1,12 +1,9 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="LanguageController as vm">
-      <div class="container">
-        
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul>
-            <li ng-repeat="localesDisplayName in vm.localesDisplayNames">
-              <a class="diwanltr-menu" href="#"  ng-click="vm.changeLanguage(localesDisplayName)">{a localesDisplayName a}</a>
-            </li>
-          </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+<div class="row language" role="navigation" ng-controller="LanguageController as vm">
+  <div class="col-xs-12" >
+    <ul class="list-inline">
+      <li ng-repeat="localesDisplayName in vm.localesDisplayNames">
+        <a href="#" ng-click="vm.changeLanguage(localesDisplayName)" ><big>{a localesDisplayName a}</big></a>
+      </li>
+    </ul>
+  </div>
+</div>

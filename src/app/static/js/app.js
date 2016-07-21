@@ -21,13 +21,11 @@ var sharabelwasl = angular
   .constant('VERSION_TAG', /*VERSION_TAG_START*/new Date().getTime()/*VERSION_TAG_END*/)
   .constant('LOCALES', {
     'locales': {
-      'ar': 'العربيه',
-      'fr': 'Français',
-      'nl': 'Nederlands',
-      'de': 'Deutsch',
-      'en': 'English',
-
-      
+      'en': 'EN',
+      'de': 'DE',
+      'fr': 'FR',
+      'nl': 'NL',
+      'ar': 'العربيه'
     },
     'preferredLocale': 'en'
   })
