@@ -28,7 +28,9 @@ angular.module('sharabelwasl')
       })
       .then(function(response) {
         _callback(response.data['data']);
-        setTimeout(function(){angular.element(document.querySelector("#content")).removeClass('loading');}, 250);
+        setTimeout(function(){
+          angular.element(document).find("html").removeClass("full");
+          angular.element(document.querySelector("#content")).removeClass('loading');}, 250);
       }, function ( response ) {
           // TODO: handle the error somehow
       });
