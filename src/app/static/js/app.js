@@ -14,8 +14,8 @@ var sharabelwasl = angular
     'ngResource',
     'ngSanitize',
     'pascalprecht.translate',
-    'ui.bootstrap'
-    // 'tmhDynamicLocale'
+    'ui.bootstrap',
+    'tmh.dynamicLocale'
   ])
   .constant('DEBUG_MODE', /*DEBUG_MODE*/true/*DEBUG_MODE*/)
   .constant('VERSION_TAG', /*VERSION_TAG_START*/new Date().getTime()/*VERSION_TAG_END*/)
@@ -52,6 +52,6 @@ var sharabelwasl = angular
     $translateProvider.useLocalStorage();
   })
   // Angular Dynamic Locale
-//   .config(function (tmhDynamicLocaleProvider) {
-//     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
-// });
+  .config(function (tmhDynamicLocaleProvider) {
+    tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
+});

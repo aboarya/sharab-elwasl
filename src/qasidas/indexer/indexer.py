@@ -26,7 +26,7 @@ def get_attrs(filename, e):
     return elem.attrib['title'], int(elem.attrib['id']) - 1
 
 def index(index_name, es, title, txtNum, lineNum, body):
-    es.index(index=index_name, doc_type='verse', id=txtNum, body=body)
+    es.index(index=index_name, doc_type=body['qasida_number'], id=txtNum, body=body)
 
 def _translate(target, lineText):
     try:
@@ -40,8 +40,8 @@ def _make_index(data):
     return {
         'qasida_number' : data['qasida_number'],
         'title' : data['title'],
-        'ar_title' : data['title'],
-        'na_title' : data['title_na'],
+        'ar_title' : data['title_na'],
+        'na_title' : data['title'],
         'en_title' : data['title_en'],
         'de_title' : data['title_de'],
         'nl_title' : data['title_nl'],
@@ -79,7 +79,7 @@ def _process_verse(data, counter):
     data['verse_second_na'] = remove_accents(second.decode(encoding)).encode(encoding)
                             
     for target in targets:
-        time.sleep(0.3)
+        time.sleep(0.5)
         data['%s_first'%target] = _translate(target, first)
         data['%s_second'%target] = _translate(target, second)
         if not isinstance(data['title_na'], int):
@@ -87,36 +87,41 @@ def _process_verse(data, counter):
         else:
             data['title_%s' % target] = data['title_na']
 
-    time.sleep(2*math.log(counter))
+    time.sleep(0.5*math.log(counter))
     print "indexing qasida line", counter
-    index("sharab-elwasl", data['es'], data['title'],
+    index("sharab-elwaslx12", data['es'], data['title'],
         data['txtNum'], data['lineNum'], _make_index(data))
 
 def _process_title(_title, number):
-    a, title = _title.split(':')
-    c = title[title.rindex('('):]
-    title = title.replace(c,'')
+    try:
+        a, title = _title.split(':')
+        c = title[title.rindex('('):]
+        title = title.replace(c,'')
 
-    if len(title) > 2:
-        return title
-
+        if len(title) > 2:
+            return title
+    except:
+        pass
     return str(number)
     
 def create_index(directory, e):
     es = elasticsearch.Elasticsearch()  
     qasidas = [f for f in listdir(directory) if isfile(join(directory, f)) and ".txt" in f]
-
+    
+    count = 0
     for filename in qasidas:
         title, number = get_attrs(filename, e)
 
-        title_na = remove_accents(title).encode(encoding)
+        # title_na = remove_accents(title).encode(encoding)
         
-        title_na = _process_title(title_na, number)
+        title_na = _process_title(title, number)
 
-        # if number == 43: continue
+        
+        start = datetime.datetime.now()
+        
         print "indexing qasida", title_na
-
         with open(directory+"/"+filename) as qasida:
+            count += 1
             lineNum = 0 # line number including empty lines
             txtNum = 0 # line number of non-empty lines
             try:                
@@ -132,11 +137,18 @@ def create_index(directory, e):
                             data = dict(qasida_number=number, es=es, lineNum=lineNum)
                             data.update(dict(title=title, title_na=title_na, txtNum=txtNum, lineText=lineText))
                             _process_verse(data, txtNum)
-
+                break
             except UnicodeDecodeError as e:
                 # print("Decode error at: " + str(lineNum) + ':' + str(txtNum))
                 print(e)
 
+    end = datetime.datetime.now()
+    duration = end - start
+    d = divmod(duration.total_seconds(), 86400)
+    h = divmod(d[1],3600)  # hours
+    m = divmod(h[1],60)  # minutes
+    s = m[1]  # seconds
+    print 'indexing %d qasidas took %d days, %d hours, %d minutes, %d seconds' % (count,d[0],h[0],m[0],s)
 # if __name__ == '__main__':
 #     directory = sys.argv[1]
 #     e = xml.etree.ElementTree.parse(directory+'/chapters.xml').getroot()

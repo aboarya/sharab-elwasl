@@ -42,6 +42,16 @@ angular.module('sharabelwasl')
       vm.ajax(path, vm.search_callback);
     }
 
+    vm.back_to_search = function() {
+      angular.element(document.querySelector("#content")).addClass('loading');
+      vm.query.template_url = '/partial/search-section';
+      setTimeout(function() {
+          angular.element(document).find("html").addClass("full");
+          angular.element(document.querySelector("#content")).removeClass('loading');
+        }, 250);
+      
+    }
+
     vm.user_search = function() {
       vm.execute_search(encodeURI(vm.query.term));
     };
@@ -67,6 +77,7 @@ angular.module('sharabelwasl')
 
       vm.lang_first = vm.get_current_lang()+"_first";
       vm.lang_second = vm.get_current_lang()+"_second";
+      vm.lang_title = vm.get_current_lang()+"_title";
 
       for (var i=0; i < data.length; i++) {
 
@@ -126,6 +137,10 @@ angular.module('sharabelwasl')
     
     vm.set_verse = function (n) {
         vm.current_verse = n;
+    };
+
+    vm.fix_title = function (title) {
+        return title.replace(")", "").replace("(", "");
     };
 
     vm.range = function (start, end) {
