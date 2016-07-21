@@ -137,3 +137,29 @@ angular.module('sharabelwasl')
     };
     
 });
+
+angular.module('sharabelwasl')
+  .directive('loading',   ['$http' ,function ($http)
+    {
+      return {
+        restrict: 'A',
+        link: function ($scope, elm, attrs) {
+          $scope.isLoading = function () {
+              return $http.pendingRequests.length > 0;
+          };
+
+          $scope.$watch($scope.isLoading, function (v) {
+            if(v){
+              elm.addClass('loading');
+              // if ($scope.key == elm.attr('id')){};
+            }else{
+              setTimeout(function(){elm.removeClass('loading');}, 250)
+              // if ($scope.key == elm.attr('id')){}
+            }
+          });
+
+
+        }
+      };
+
+}]);
