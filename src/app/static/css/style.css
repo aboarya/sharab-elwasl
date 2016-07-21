@@ -31,3 +31,11 @@
     border: none;
     height: 25px;
   }
+
+.loading {
+  opacity: 0.25;
+  background-image: url('/static/img/ajax1.gif');
+  background-repeat: no-repeat;
+  background-color: #d3d3d3;
+  background-position: center; 
+}

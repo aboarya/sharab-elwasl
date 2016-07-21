@@ -10,8 +10,9 @@
 
 angular.module('sharabelwasl')
   .controller('QueryController', function($scope, $location, $http, $translateLocalStorage) {
-
+    // 
     var vm = this;
+    $scope.isLoading = false;
     vm.query = {"term" : "", "template_url" : "/partial/search-section"};
 
     vm.get_current_lang = function() {
@@ -19,14 +20,15 @@ angular.module('sharabelwasl')
     };
 
     vm.ajax = function(path, _callback) {
+      angular.element(document.querySelector("#content")).addClass('loading');
       $http({
           url      : path,
           method   : 'GET',
           headers : { 'X-Requested-With' :'XMLHttpRequest'}
       })
       .then(function(response) {
-          // sharabelwasl.requests.search_callback($scope, response.data['data']);
-          _callback(response.data['data']);
+        _callback(response.data['data']);
+        setTimeout(function(){angular.element(document.querySelector("#content")).removeClass('loading');}, 250);
       }, function ( response ) {
           // TODO: handle the error somehow
       });
@@ -135,31 +137,4 @@ angular.module('sharabelwasl')
         }
         return ret;
     };
-    
 });
-
-angular.module('sharabelwasl')
-  .directive('loading',   ['$http' ,function ($http)
-    {
-      return {
-        restrict: 'A',
-        link: function ($scope, elm, attrs) {
-          $scope.isLoading = function () {
-              return $http.pendingRequests.length > 0;
-          };
-
-          $scope.$watch($scope.isLoading, function (v) {
-            if(v){
-              elm.addClass('loading');
-              // if ($scope.key == elm.attr('id')){};
-            }else{
-              setTimeout(function(){elm.removeClass('loading');}, 250)
-              // if ($scope.key == elm.attr('id')){}
-            }
-          });
-
-
-        }
-      };
-
-}]);
