@@ -98,6 +98,7 @@ angular.module('sharabelwasl')
     }
 
     vm.check_better_translation_callback = function(data) {
+      if (vm.get_current_lang() == 'ar') {return;}
       if (data.hasOwnProperty("qasida_number")) {
         for (title in vm.qasidas[vm.current_qasida]) {
           vm.qasidas[vm.current_qasida][title][vm.current_verse] = data;
