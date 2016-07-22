@@ -35,7 +35,7 @@ def search(term):
 
     res = _es.search(index="sharab-elwasl", body=body)
 
-    print("%d documents found for term %s" % (res['hits']['total'], term))
+    # print("%d documents found for term %s" % (res['hits']['total'], term))
 
     if bool(res['hits']['total']):
         # x  = group(res['hits']['hits'])
