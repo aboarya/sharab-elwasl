@@ -106,7 +106,7 @@ angular.module('sharabelwasl')
     }
 
     vm.search_callback = function(data) {
-      if (data.length == 0){ return ;}
+      if (data.length == 0){ vm.query.template_url = '/partial/no-results';return ;}
 
       vm.current_qasida = 0, vm.current_verse = 0, vm.qasidas = [];
       vm.verses = [], vm.titles = [], vm.hgt = 100;
