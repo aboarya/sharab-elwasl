@@ -1,0 +1,36 @@
+# Create a directory for the UNIX sockets
+sudo mkdir -p /var/run/sharabelwasl
+sudo chown apache:apache /var/run/sharabelwasl
+
+# Create a directory for the logs
+sudo mkdir -p /var/log/sharabelwasl
+sudo chown apache:apache /var/log/sharabelwasl
+
+# Create a directory for the configs
+sudo mkdir -p /etc/sharabelwasl
+
+cat <<EOF>> /etc/sharabelwasl/sharabelwasl.ini
+[uwsgi]
+socket = /var/run/flask-uwsgi/flask-uwsgi.sock
+home = env
+wsgi-file = controller.py 
+callable = sharabelwasl 
+master = true
+; www-data uid/gid
+uid = 1
+gid = 1
+die-on-term = true
+processes = 4
+threads = 2
+logger = file:/var/log/sharabelwasl/sharabelwasl.log
+EOF
+
+cat <<EOF>> /etc/init/sharabelwasl.conf
+start on [2345]
+stop on [06]
+
+script
+    cd /opt/sharabelwasl
+    exec uwsgi --ini /etc/sharabelwasl/sharabelwasl.ini
+end script
+EOF
