@@ -5,7 +5,7 @@ import sys
 import json
 import random
 import uuid
-
+import base64
 import boto3
 client = boto3.client('dynamodb')
 
@@ -15,7 +15,7 @@ from elasticsearch import Elasticsearch
 _es = Elasticsearch()
 lang = 'en'
 
-body = {"query":{"bool":{"must":[{"query_string":{"default_field":"_all","query":"ibrahim"}}],"must_not":[],"should":[]}},"from":0,"size":50,"sort":[],"aggs":{}}
+body = {"query":{"bool":{"must":[{"query_string":{"default_field":"_all","query":"mustafa"}}],"must_not":[],"should":[]}},"from":0,"size":50,"sort":[],"aggs":{}}
 res = _es.search(index="sharab-elwasl", body=body)
 print("%d documents found" % res['hits']['total'])
 es_results = [res['_source'] for res in sorted(res['hits']['hits'], key=lambda r: r['_score'], reverse=True)]
@@ -30,98 +30,29 @@ for es_result in es_results:
     # if str(es_result['qasida_number']) == str(1):
     #     es_result['en_first'] = es_result['en_first'].replace('Ibrahim', 'Ebrahim')
     client.put_item(TableName='user_verse_en',Item={
-                    "translation_id" : {
-                        "S" : str(uuid.uuid4())
-                    },
-                    "first_user_translation": {
+        "first_second" : {"S" : '{}_{}'.format(es_result['en_first'], es_result['en_second'])},
+                    "en_first": {
                         "S": es_result['en_first']
                     },
-                    "num_up_votes": {
-                        "N": str(random.randint(1,20))
-                    },
-                    "num_down_votes": {
-                        "N": str(random.randint(1,20))
-                    },
-                    "second_user_translation": {
+                    "en_second": {
                         "S": es_result['en_second']
                     },
                     "line_number": {
-                        "S": str(es_result['lineNum'])
+                        "S": str(es_result['line_number'])
                     },
-                    "qasida_number" : {"S" : str(es_result['qasida_number'])}
+                    "qasida_number" : {"S" : str(es_result['qasida_number'])
+                    },
+                    "vote_total": {
+                        "N": str(random.randint(1,20))
+                    },
+                    "vote_count": {
+                        "N": str(random.randint(1,20))
+                    },
+                    "vote_average": {
+                        "N": str(random.randint(1,20))
+                    },
+                    "na_title": {
+                        "S": base64.b64encode(str(es_result['na_title']))
+                    },
         })
-    # client.put_item(TableName='user_verse_en',Item={
-    #                 "first_second_en" : {
-    #                     "S" : '{}_{}'.format(es_result['en_first'], es_result['en_second'])
-    #                 },
-    #                 "en_first": {
-    #                     "S": es_result['en_first']
-    #                 },
-    #                 "first_user_translation": {
-    #                     "S": es_result['en_first']
-    #                 },
-    #                 "first_num_up_votes": {
-    #                     "N": str(random.randint(1,20))
-    #                 },
-    #                 "first_num_down_votes": {
-    #                     "N": str(random.randint(1,20))
-    #                 },
-    #                 "en_second": {
-    #                     "S": es_result['en_second']
-    #                 },
-    #                 "second_user_translation": {
-    #                     "S": es_result['en_second']
-    #                 },
-    #                 "second_num_up_votes": {
-    #                     "N": str(random.randint(1,20))
-    #                 },
-    #                 "second_num_down_votes": {
-    #                     "N": str(random.randint(1,20))
-    #                 },"qasida_number" : {"S" : str(es_result['qasida_number'])}
-    #     })
-
-# key = '{}_first'.format(lang)
-# attrs = ['first_user_tranlsation', 'second_user_tranlsation',
-#         'first_num_up_votes', 'second_num_up_votes',
-#         'first_num_down_votes', 'second_num_down_votes', key]
-
-# query = { 'user_verse_{}'.format(lang): {
-#                 'Keys' : [{key: {'S': item[key]}} for item in items],
-#                 'AttributesToGet': attrs
-#             }
-#         }
-# raise RuntimeError([{key: {'S': item[key]}} for item in items])
-# results = client.batch_get_item(RequestItems=query)
-# results = results['Responses']['user_verse_{}'.format(lang)]
-
-
-# def get(lang, items):
-#     key = '{}_first'.format(lang)
-#     attrs = ['first_user_translation', 'second_user_translation',
-#         'first_num_up_votes', 'second_num_up_votes',
-#         'first_num_down_votes', 'second_num_down_votes', key]
-    
-#     user_verse_Keys, verse_Keys, qaida_Keys = [],[],[]
-#     for item in items:
-#         if not item['qasida_number'] in qaida_Keys:
-#             qaida_Keys.append({"qasida_number" : { "S" : item['qasida_number']}})
-#         if not item['en_first'] in verse_Keys:
-#             verse_Keys.append({"en_first" : {"S" : item['en_first']}})
-#         if not item['en_first'] in user_verse_Keys:
-#             user_verse_Keys.append({"en_first" : {"S" : item['en_first']}})
-
-
-#     query = { 
-#         'user_verse_{}'.format(lang) : {'Keys' : user_verse_Keys},
-#         'verse_{}'.format(lang) : {'Keys' : verse_Keys},
-#         'qasida' : {'Keys' : qaida_Keys}
-
-#         }
-#     dynamo_results = client.batch_get_item(RequestItems=query)
-#     results = dynamo_results['Responses']['user_verse_{}'.format(lang)]
-#     for attr in attrs:
-#         for result in results:
-#             result.update({attr: result[attr].values()[0]})
-
-#     return results
-
+    break

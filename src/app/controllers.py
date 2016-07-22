@@ -25,13 +25,16 @@ def page_not_found(e):
 def hello(name=None):
     return flask.render_template('{}.html'.format(name))
 
+@sharabelwasl.route('/uib/template/tooltip/tooltip-popup.html')
+def popup():
+    return flask.render_template('popover.html')
 
 @sharabelwasl.route('/resources/<name>')
 def resources(name=None):
     return flask.make_response(open('app/resources/{}'.format(name)).read())
 
 @sharabelwasl.route('/search/<lang>/<term>')
-@api.make_ajax
+# @api.make_ajax
 def search(term=None, lang=None):
 
     keys = ['_title', '_first', '_second']
@@ -51,15 +54,11 @@ def search(term=None, lang=None):
 def scan(lang=None, qasida_number=None, line_number=None):
 
     response = api.scan(lang, qasida_number, line_number)
-    items = sorted(response['Items'], key=lambda i: (int(i['num_up_votes'])-int(i['num_down_votes'])), reverse=True)
+    items = sorted(response['Items'], key=lambda i: (int(i['vote_average'])), reverse=True)
     items = [{key:str(val) for key, val in item.items()} for item in items]
-    print '>>>>>>>>>>>>>>>>>>', items
-    if response['Count'] > 3:
-        data = items[:3]
-    else:
-        data = items
+    items = items[0] if len(items) > 0 else items
 
-    response = dict(next='show_translation',data=data)
+    response = dict(next='show_translation',data=items)
     return flask.jsonify(response)
 
 @sharabelwasl.route('/dynamo/update/<lang>/<uuid>/<is_up>/<vote>')

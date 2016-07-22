@@ -12,15 +12,19 @@ angular.module('sharabelwasl')
   .controller('QueryController', function($scope, $location, $http, $translateLocalStorage) {
     // 
     var vm = this;
-    $scope.isLoading = false;
     vm.query = {"term" : "", "template_url" : "/partial/search-section"};
+    vm.cached_verses = [];
+    
 
     vm.get_current_lang = function() {
       return $translateLocalStorage.get();
     };
 
     vm.ajax = function(path, _callback) {
-      angular.element(document.querySelector("#content")).addClass('loading');
+      setTimeout(function() {
+        angular.element(document).find("html").addClass("loading");
+        angular.element(document).find("html").removeClass("full");
+      },200);
       $http({
           url      : path,
           method   : 'GET',
@@ -28,13 +32,10 @@ angular.module('sharabelwasl')
       })
       .then(function(response) {
         _callback(response.data['data']);
-        setTimeout(function(){
-          angular.element(document).find("html").removeClass("full");
-          angular.element(document.querySelector("#content")).removeClass('loading');}, 250);
-      }, function ( response ) {
-          // TODO: handle the error somehow
+        angular.element(document).find("html").removeClass("loading");
+
       });
-    };
+    }
 
     vm.execute_search = function(term) {
       var path = '/search/'+vm.get_current_lang()+'/'+term;
@@ -43,12 +44,14 @@ angular.module('sharabelwasl')
     }
 
     vm.back_to_search = function() {
-      angular.element(document.querySelector("#content")).addClass('loading');
+      
+      angular.element(document).find("html").addClass("loading");
       vm.query.template_url = '/partial/search-section';
       setTimeout(function() {
-          angular.element(document).find("html").addClass("full");
-          angular.element(document.querySelector("#content")).removeClass('loading');
+        angular.element(document).find("html").addClass("full");
+        angular.element(document).find("html").removeClass('loading');
         }, 250);
+      
       
     }
 
@@ -69,24 +72,41 @@ angular.module('sharabelwasl')
       }
     };
 
+    vm.check_better_translation = function(verses) {
+      
+      vm.verse = verses[vm.current_verse];
+      var verse_key = vm.verse[vm.lang_first].replace(' ','_')+"_"+vm.verse[vm.lang_second].replace(' ','_');
+      if (vm.cached_verses.indexOf(verse_key) == -1) {
+
+        vm.cached_verses.push(verse_key);
+        var line = vm.verse['line_number']; var number = vm.verse['qasida_number'];
+        var path = "/dynamo/scan/"+vm.get_current_lang()+"/"+number+"/"+line;
+        vm.ajax(path, vm.check_better_translation_callback);  
+      }
+
+    }
+
+    vm.check_better_translation_callback = function(data) {
+      if (data.hasOwnProperty("qasida_number")) {
+        for (title in vm.qasidas[vm.current_qasida]) {
+          vm.qasidas[vm.current_qasida][title][vm.current_verse] = data;
+        }
+      }
+    }
+
     vm.search_callback = function(data) {
 
       vm.current_qasida = 0, vm.current_verse = 0, vm.qasidas = [];
       vm.verses = [], vm.titles = [], vm.hgt = 100;
       vm._next_qasida = 1, vm._prev_qasida = -1;
 
-      vm.lang_first = vm.get_current_lang()+"_first";
-      vm.lang_second = vm.get_current_lang()+"_second";
-      vm.lang_title = vm.get_current_lang()+"_title";
-
       for (var i=0; i < data.length; i++) {
 
         vm.qasidas[i] = data[i];
-
+    
         for (var title in data[i]) {
-          
-          var hgt = Math.floor(20*data[i][title].length);
-
+          var hgt = Math.floor(20*data[i][title].length);      
+          if(i==0) {vm.check_better_translation(data[i][title]);}
           if (hgt > vm.hgt) {vm.hgt = hgt;}
           if (data[i].hasOwnProperty(title)) {vm.titles.push(title);}
 
@@ -101,6 +121,7 @@ angular.module('sharabelwasl')
       vm.current_verse = 0;
       if (vm.current_qasida > 0) {
         vm.current_qasida--;
+        for (title in vm.qasidas[vm.current_qasida]){vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);}
         vm._next_qasida--;
         vm._prev_qasida--;
       }
@@ -110,6 +131,7 @@ angular.module('sharabelwasl')
       vm.current_verse = 0;
       if (vm.current_qasida < vm.qasidas.length - 1) {
           vm.current_qasida++;
+          for (title in vm.qasidas[vm.current_qasida]){vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);}
           vm._next_qasida++;
           vm._prev_qasida++;
       }
@@ -122,6 +144,7 @@ angular.module('sharabelwasl')
     vm.prev_verse = function () {
         if (vm.current_verse > 0) {
             vm.current_verse--;
+            for (title in vm.qasidas[vm.current_qasida]){vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);}
         }
     };
     
@@ -130,6 +153,7 @@ angular.module('sharabelwasl')
       {
         if (vm.current_verse < vm.qasidas[vm.current_qasida][title].length - 1) {
             vm.current_verse++;
+            vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);
         }
       }
         
@@ -154,4 +178,8 @@ angular.module('sharabelwasl')
         }
         return ret;
     };
+
+    vm.lang_first = vm.get_current_lang()+"_first";
+    vm.lang_second = vm.get_current_lang()+"_second";
+    vm.lang_title = vm.get_current_lang()+"_title";
 });

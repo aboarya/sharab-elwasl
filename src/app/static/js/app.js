@@ -15,7 +15,8 @@ var sharabelwasl = angular
     'ngSanitize',
     'pascalprecht.translate',
     'ui.bootstrap',
-    'tmh.dynamicLocale'
+    'tmh.dynamicLocale',
+    'xeditable'
   ])
   .constant('DEBUG_MODE', /*DEBUG_MODE*/true/*DEBUG_MODE*/)
   .constant('VERSION_TAG', /*VERSION_TAG_START*/new Date().getTime()/*VERSION_TAG_END*/)
@@ -28,6 +29,9 @@ var sharabelwasl = angular
       'ar': 'العربيه'
     },
     'preferredLocale': 'en'
+  })
+  .run(function(editableOptions) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
   })
   .config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.startSymbol('{a');

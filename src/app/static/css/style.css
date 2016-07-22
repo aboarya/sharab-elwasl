@@ -33,6 +33,8 @@
   background-repeat: no-repeat;
   background-color: #d3d3d3;
   background-position: center; 
+  height:100vh;min-height:100vh; 
+  width: 100%;
 }
 
 .list-inline li a {

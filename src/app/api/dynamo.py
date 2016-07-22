@@ -4,18 +4,18 @@ import boto3
 from boto3.dynamodb.conditions import Key, Attr
 client = boto3.client('dynamodb')
 
-def scan(lang, qasida_number, line_number):
+def scan(lang, qasida_number, line_number=None):
 
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('user_verse_{}'.format(lang))
 
-    attrs = ['first_user_translation', 'second_user_translation',
-    'num_down_votes', 'num_up_votes', 'qasida_number', 'line_number', 'translation_id']
+    attrs = ['{}_first'.format(lang), '{}_second'.format(lang), 'qasida_number', 'line_number', 'vote_count', 'vote_total', 'vote_average']
 
     response = table.scan(
         FilterExpression=Key('qasida_number').eq(qasida_number) & Key('line_number').eq(line_number),
         ProjectionExpression=",".join(attrs)
         )
+
 
     return response
 

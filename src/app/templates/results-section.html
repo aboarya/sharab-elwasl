@@ -4,8 +4,8 @@
   </div>
 </div>
 <div  class="row full-page">
-  <div class="col-xs-12 col-md-10">
-  <table class="table  table-borderless text-right" >
+  <div class="col-xs-11">
+  <table class="table  table-borderless text-right col-xs-11" >
   <thead class="thead-inverse">
     <tr>
       <th colspan="3" ng-repeat="(title, verses) in vm.qasidas[vm.current_qasida]" class="col-xs-12">
@@ -22,12 +22,17 @@
     <tr>
       <td class="col-xs-5"><big>{a verses[vm.current_verse]['ar_second'] a}</big></td>
       <td class="col-xs-5"><big>{a verses[vm.current_verse]['ar_first'] a}</big></td>
-      <td  class="col-xs-1"><big>{a verses[vm.current_verse]['line_number'] a}</big></th>
+      <td  class="col-xs-1" ><big>{a verses[vm.current_verse]['line_number'] a}</big></th>
     </tr>
-    <tr>
+    <tr ng-show="vm.get_current_lang() != 'ar'">
       <td class="col-xs-5"><big>{a verses[vm.current_verse][vm.lang_first] a}</big></td>
       <td class="col-xs-5"> <big>{a verses[vm.current_verse][vm.lang_second] a}</big></td>
       <td class="col-xs-1">&nbsp;</th>
+    </tr>
+    <tr>
+      <td class="col-xs-5"><input type="text" placeholder="{a verses[vm.current_verse][vm.lang_first] a}" /></td>
+      <td class="col-xs-5"> <input type="text"  placeholder="{a verses[vm.current_verse][vm.lang_second] a}" /></td>
+      <td class="col-xs-1"><button class="btn-sm btn-success" >Save</button></td>
     </tr>
     <tr>
       <td colspan="3" align="right">
@@ -46,8 +51,8 @@
         </table>
       </td>
     </tr>
-    <tr>
-      <td col="3">
+    <tr align="center">
+      <td colspan="3" >
         <table class="table table-bordered " id="verse_nav" class="col-xs-6" >
           <tr>
             <td class="text-center">

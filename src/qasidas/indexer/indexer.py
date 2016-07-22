@@ -89,7 +89,7 @@ def _process_verse(data, counter):
 
     time.sleep(0.5*math.log(counter))
     print "indexing qasida line", counter
-    index("sharab-elwaslx12", data['es'], data['title'],
+    index("sharab-elwasl", data['es'], data['title'],
         data['txtNum'], data['lineNum'], _make_index(data))
 
 def _process_title(_title, number):
