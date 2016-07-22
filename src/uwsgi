@@ -12,7 +12,7 @@ sudo mkdir -p /etc/sharabelwasl
 cat <<EOF>> /etc/sharabelwasl/sharabelwasl.ini
 [uwsgi]
 socket = /var/run/flask-uwsgi/flask-uwsgi.sock
-home = env
+env = /usr/local/lib/python2.7/site-packages
 wsgi-file = controller.py 
 callable = sharabelwasl 
 master = true
@@ -30,7 +30,7 @@ start on [2345]
 stop on [06]
 
 script
-    cd /opt/sharabelwasl
+    cd /opt/sharabelwasl/src/app
     exec uwsgi --ini /etc/sharabelwasl/sharabelwasl.ini
 end script
 EOF
