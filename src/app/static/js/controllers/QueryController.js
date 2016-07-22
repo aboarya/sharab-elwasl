@@ -12,6 +12,7 @@ angular.module('sharabelwasl')
   .controller('QueryController', function($scope, $location, $http, $translateLocalStorage) {
     // 
     var vm = this;
+    // $scope.is_loading = false;
     vm.query = {"term" : "", "template_url" : "/partial/search-section"};
     vm.cached_verses = [];
     
@@ -20,11 +21,22 @@ angular.module('sharabelwasl')
       return $translateLocalStorage.get();
     };
 
-    vm.ajax = function(path, _callback) {
-      setTimeout(function() {
+    $scope.is_loading = function () {
+      return $http.pendingRequests.length > 0;
+    };
+
+
+
+    $scope.$watch($scope.is_loading, function (v) {
+      if(v){
         angular.element(document).find("html").addClass("loading");
-        angular.element(document).find("html").removeClass("full");
-      },200);
+      } else{
+          setTimeout(function(){angular.element(document).find("html").removeClass("loading");}, 200);
+      }
+    });
+
+    vm.ajax = function(path, _callback) {
+      
       $http({
           url      : path,
           method   : 'GET',
@@ -32,12 +44,11 @@ angular.module('sharabelwasl')
       })
       .then(function(response) {
         _callback(response.data['data']);
-        angular.element(document).find("html").removeClass("loading");
-
       });
     }
 
     vm.execute_search = function(term) {
+      angular.element(document).find("html").removeClass("full");
       var path = '/search/'+vm.get_current_lang()+'/'+term;
       $location.url(path);
       vm.ajax(path, vm.search_callback);
@@ -95,6 +106,7 @@ angular.module('sharabelwasl')
     }
 
     vm.search_callback = function(data) {
+      if (data.length == 0){ return ;}
 
       vm.current_qasida = 0, vm.current_verse = 0, vm.qasidas = [];
       vm.verses = [], vm.titles = [], vm.hgt = 100;
