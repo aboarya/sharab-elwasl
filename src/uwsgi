@@ -4,7 +4,7 @@ sudo chown nginx:nginx /var/run/sharabelwasl
 
 # Create a directory for the logs
 sudo mkdir -p /var/log/sharabelwasl
-sudo chown wnginx:nginx /var/log/sharabelwasl
+sudo chown nginx:nginx /var/log/sharabelwasl
 
 # Create a directory for the configs
 sudo mkdir -p /etc/sharabelwasl
