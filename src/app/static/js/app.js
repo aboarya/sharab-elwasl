@@ -28,7 +28,7 @@ var sharabelwasl = angular
       'nl': 'NL',
       'ar': 'العربيه'
     },
-    'preferredLocale': 'en'
+    'preferredLocale': 'ar'
   })
   .run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
