@@ -81,7 +81,10 @@ angular.module('sharabelwasl')
     };
 
     vm.search = function(obj) {
-
+      vm.lang_first = vm.get_current_lang()+"_first";
+      vm.lang_second = vm.get_current_lang()+"_second";
+      vm.lang_title = vm.get_current_lang()+"_title";
+      
       if (typeof obj == 'undefined') {
         vm.user_search();
       } else {
@@ -199,9 +202,6 @@ angular.module('sharabelwasl')
         return ret;
     };
 
-    vm.lang_first = vm.get_current_lang()+"_first";
-    vm.lang_second = vm.get_current_lang()+"_second";
-    vm.lang_title = vm.get_current_lang()+"_title";
 });
 
 
