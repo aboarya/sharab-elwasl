@@ -39,7 +39,7 @@ def resources(name=None):
 @sharabelwasl.route('/search/<lang>/<term>')
 # @api.make_ajax
 def search(term=None, lang=None):
-
+    
     keys = ['_title', '_first', '_second']
     
     lang_first = '{}_first'.format(lang)

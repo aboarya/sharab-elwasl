@@ -19,8 +19,9 @@ angular.module('sharabelwasl')
 
     vm.get_current_lang = function() {
       var lang = $translateLocalStorage.get();
-      if (typeof lang == 'undefined' || lang == null) {
-        return 'en';
+      
+      if (typeof lang == "undefined" || lang == "undefined" || lang == null) {
+        return "en";
       }
     };
 
