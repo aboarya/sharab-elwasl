@@ -51,7 +51,7 @@ def search(term=None, lang=None):
         term2 = ""
         try:
             _lang = translator.detect(term)
-            _lang = _lang['detectinos'][0]['language']
+            _lang = _lang[0][0]['language']
 
             if  _lang not in settings.LANGUAGES.keys():
                 term1 = translit(term.lower(), 'ar').encode('utf-8')
