@@ -58,13 +58,11 @@ def search(term=None, lang=None):
                 or not bool(detect['isReliable']):
                 term1 = translit(term.lower(), 'ar').encode('utf-8')
                 term2 = translator.translate(term1, source="ar", target=detect['language'])[0]['translatedText']
-            
+            term = '{} {} {}'.format(term, term1, term2)    
         except Exception as e:
-            print '>>>>>>>> ',e
-            term1 = ""
-            term2 = ""
+            term = '{}'.format(term) 
 
-        term = '{} {} {}'.format(term, term1, term2)
+        
         print '>>>>>>>>>>', term
     es_results, ordered = api.search(term)
 
