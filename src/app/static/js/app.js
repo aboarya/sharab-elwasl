@@ -59,3 +59,24 @@ var sharabelwasl = angular
   .config(function (tmhDynamicLocaleProvider) {
     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
 });
+
+//Load the Language API.
+google.load("language", "1");
+
+var onLoad = function () {
+  //Call google.language.transliterate() 
+google.language.transliterate(["Sameh"], "en", "ar", function(result) {
+  var x = result;
+  var y = "";
+  if (!result.error) {
+    // var container = document.getElementById("transliteration");
+    if (result.transliterations && result.transliterations.length > 0 &&
+        result.transliterations[0].transliteratedWords.length > 0) {
+      container.innerHTML = result.transliterations[0].transliteratedWords[0];
+    }
+  }
+});
+}
+
+
+google.setOnLoadCallback(onLoad);

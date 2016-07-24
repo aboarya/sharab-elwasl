@@ -3,6 +3,7 @@ import flask
 
 import api
 from app import sharabelwasl
+from transliterate import translit
 
 
 # routing for basic pages (pass routing onto the Angular app)
@@ -38,11 +39,13 @@ def resources(name=None):
 def search(term=None, lang=None):
 
     keys = ['_title', '_first', '_second']
-    langs = ['ar', lang]
     
     lang_first = '{}_first'.format(lang)
     user_translations  = '{}_user_translations'.format(lang)
-
+    if lang != 'ar':
+        #let's translit the word
+        term = '{} {}'.format(term, translit(term.lower(), 'ar').encode('utf-8'))
+        print '>>>>>>>>>>', term
     es_results, ordered = api.search(term)
 
     print '>>>>>>>>>>>>> returning %d qasidas' % len(ordered)

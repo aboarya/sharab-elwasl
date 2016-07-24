@@ -196,3 +196,5 @@ angular.module('sharabelwasl')
     vm.lang_second = vm.get_current_lang()+"_second";
     vm.lang_title = vm.get_current_lang()+"_title";
 });
+
+
