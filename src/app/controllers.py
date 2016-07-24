@@ -56,11 +56,14 @@ def search(term=None, lang=None):
 
             if detect['language'] not in settings.LANGUAGES.keys() \
                 or not bool(detect['isReliable']):
+                
                 term1 = translit(term.lower(), 'ar').encode('utf-8')
                 term2 = translator.translate(term1, source="ar", target=detect['language'])[0]['translatedText']
-            term = '{} {} {}'.format(term, term1, term2)    
+
+                term = '{} {} {}'.format(term, term1, term2)    
         except Exception as e:
-            term = '{}'.format(term) 
+            print '>>>>>>>> ',e
+            term = '{}'.format(term)
 
         
         print '>>>>>>>>>>', term
