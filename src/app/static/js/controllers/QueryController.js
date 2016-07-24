@@ -86,7 +86,7 @@ angular.module('sharabelwasl')
     vm.check_better_translation = function(verses) {
       
       vm.verse = verses[vm.current_verse];
-      if (typeof vm.verse[vm.lang_first] == 'undefined') {return;}
+      if (typeof vm.verse[vm.lang_first] == 'undefined') {var x= "";}
       var verse_key = vm.verse[vm.lang_first].replace(' ','_')+"_"+vm.verse[vm.lang_second].replace(' ','_');
       if (vm.cached_verses.indexOf(verse_key) == -1) {
 
