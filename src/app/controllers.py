@@ -3,8 +3,10 @@ import flask
 
 import api
 from app import sharabelwasl
+from api.translate import GoogleTranslator
 from transliterate import translit
 
+translator = GoogleTranslator()
 
 # routing for basic pages (pass routing onto the Angular app)
 @sharabelwasl.route('/')
@@ -44,7 +46,13 @@ def search(term=None, lang=None):
     user_translations  = '{}_user_translations'.format(lang)
     if lang != 'ar':
         #let's translit the word
-        term = '{} {}'.format(term, translit(term.lower(), 'ar').encode('utf-8'))
+        term1 = translit(term.lower(), 'ar').encode('utf-8')
+        try:
+            term2 = translator.translate(term1, source="ar", target=lang)[0]['translatedText']
+        except:
+            term2 = ""
+
+        term = '{} {} {}'.format(term, term1, term2)
         print '>>>>>>>>>>', term
     es_results, ordered = api.search(term)
 
