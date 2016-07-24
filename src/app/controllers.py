@@ -51,6 +51,7 @@ def search(term=None, lang=None):
         term2 = ""
         try:
             detect = translator.detect(term)
+            print '>>>>>>>>', detect
             detect = detect[0][0]
 
             if detect['language'] not in settings.LANGUAGES.keys() \
