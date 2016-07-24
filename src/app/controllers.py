@@ -3,6 +3,7 @@ import flask
 
 import api
 from app import sharabelwasl
+from app import settings
 from api.translate import GoogleTranslator
 from transliterate import translit
 
@@ -46,10 +47,17 @@ def search(term=None, lang=None):
     user_translations  = '{}_user_translations'.format(lang)
     if lang != 'ar':
         #let's translit the word
-        term1 = translit(term.lower(), 'ar').encode('utf-8')
+        term1 = ""
+        term2 = ""
         try:
-            term2 = translator.translate(term1, source="ar", target=lang)[0]['translatedText']
+            _lang = translate.detect(term)source[0]['language']
+
+            if  _lang not in settings.LANGUAGES.keys():
+                term1 = translit(term.lower(), 'ar').encode('utf-8')
+                term2 = translator.translate(term1, source="ar", target=lang)[0]['translatedText']
+            
         except:
+            term1 = ""
             term2 = ""
 
         term = '{} {} {}'.format(term, term1, term2)
