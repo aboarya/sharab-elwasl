@@ -50,13 +50,15 @@ def search(term=None, lang=None):
         term1 = ""
         term2 = ""
         try:
-            _lang = translator.detect(term)[0]['language']
+            _lang = translator.detect(term)
+            _lang = _lang['detectinos'][0]['language']
 
             if  _lang not in settings.LANGUAGES.keys():
                 term1 = translit(term.lower(), 'ar').encode('utf-8')
                 term2 = translator.translate(term1, source="ar", target=lang)[0]['translatedText']
             
         except Exception as e:
+            print '>>>>>>>> ',e
             term1 = ""
             term2 = ""
 
