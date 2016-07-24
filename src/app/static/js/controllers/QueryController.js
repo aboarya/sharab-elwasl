@@ -21,7 +21,8 @@ angular.module('sharabelwasl')
       var lang = $translateLocalStorage.get();
       
       if (typeof(lang) == "undefined" || lang == "undefined" || lang == null) {
-        return "en";
+          var lang = window.navigator.userLanguage || window.navigator.language;
+          lang = lang.split('-')[0];
       }
       return lang;
     };
