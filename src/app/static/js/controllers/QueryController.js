@@ -60,7 +60,7 @@ angular.module('sharabelwasl')
     }
 
     vm.back_to_search = function() {
-      
+      vm.query.term = "";
       angular.element(document).find("html").addClass("loading");
       vm.query.template_url = '/partial/search-section';
       setTimeout(function() {
