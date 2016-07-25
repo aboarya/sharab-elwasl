@@ -71,7 +71,7 @@ from httplib2 import FileCache
 from urllib2 import HTTPRedirectHandler, HTTPDefaultErrorHandler, HTTPError
 
 ### Hard-coded variables ###
-api = ''
+api = 'AIzaSyCVDHrnNBEChl7hwXiO_Welv-NzqmYCF8Y'
 
 languages = ["af", "sq", "ar","be", "bg", "ca", "zh-CN", "zh-TW", "hr",
              "cs", "da", "nl", "en", "et", "tl", "fi", "fr", "gl", "de",

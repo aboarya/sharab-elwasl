@@ -92,9 +92,9 @@ angular.module('sharabelwasl')
       }
     };
 
-    vm.check_better_translation = function(verses) {
+    vm.check_better_translation = function(verse) {
       
-      vm.verse = verses[vm.current_verse];
+      vm.verse = verse;
       
       var verse_key = vm.verse[vm.lang_first].replace(' ','_')+"_"+vm.verse[vm.lang_second].replace(' ','_');
       if (vm.cached_verses.indexOf(verse_key) == -1) {
@@ -110,9 +110,7 @@ angular.module('sharabelwasl')
     vm.check_better_translation_callback = function(data) {
       if (vm.get_current_lang() == 'ar') {return;}
       if (data.hasOwnProperty("qasida_number")) {
-        for (title in vm.qasidas[vm.current_qasida]) {
-          vm.qasidas[vm.current_qasida][title][vm.current_verse] = data;
-        }
+        vm.qasidas[vm.current_qasida][1][vm.current_verse] = data;
       }
     }
 
@@ -124,19 +122,18 @@ angular.module('sharabelwasl')
       vm._next_qasida = 1, vm._prev_qasida = -1;
 
       for (var i=0; i < data.length; i++) {
-
         vm.qasidas[i] = data[i];
-    
-        for (var title in data[i]) {
-          var hgt = Math.floor(20*data[i][title].length);      
-          if(i==0) {vm.check_better_translation(data[i][title]);}
-          if (hgt > vm.hgt) {vm.hgt = hgt;}
-          if (data[i].hasOwnProperty(title)) {vm.titles.push(title);}
+        
+        var title = vm.qasidas[i][0];
+        vm.titles.push(title);
 
-        }
+        var hgt = Math.floor(20*vm.qasidas[i][1].length);
+
+        if(i==0) {vm.verses = vm.qasidas[0][1]; vm.check_better_translation(vm.verses[vm.current_verse]);}
+        if (hgt > vm.hgt) {vm.hgt = hgt;}
+        
       }
       vm.query.template_url = '/partial/results-section'
-      // $('html,body').animate({scrollTop: $(angular.element('#read')).offset().top}, 'slow'); 
 
     };
 
@@ -144,7 +141,8 @@ angular.module('sharabelwasl')
       vm.current_verse = 0;
       if (vm.current_qasida > 0) {
         vm.current_qasida--;
-        for (title in vm.qasidas[vm.current_qasida]){vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);}
+        vm.verses = vm.qasidas[vm.current_qasida][1];
+        vm.check_better_translation(vm.verses[vm.current_verse]);
         vm._next_qasida--;
         vm._prev_qasida--;
       }
@@ -153,10 +151,11 @@ angular.module('sharabelwasl')
     vm.next_qasida = function () {
       vm.current_verse = 0;
       if (vm.current_qasida < vm.qasidas.length - 1) {
-          vm.current_qasida++;
-          for (title in vm.qasidas[vm.current_qasida]){vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);}
-          vm._next_qasida++;
-          vm._prev_qasida++;
+        vm.current_qasida++;
+        vm.verses = vm.qasidas[vm.current_qasida][1];
+        vm.check_better_translation(vm.verses[vm.current_verse]);
+        vm._next_qasida++;
+        vm._prev_qasida++;
       }
     };
     
@@ -165,19 +164,17 @@ angular.module('sharabelwasl')
     };
 
     vm.prev_verse = function () {
-        if (vm.current_verse > 0) {
-            vm.current_verse--;
-            for (title in vm.qasidas[vm.current_qasida]){vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);}
-        }
+      if (vm.current_verse > 0) {
+        vm.current_verse--;
+        vm.check_better_translation(vm.verses[vm.current_verse]);
+      }
     };
     
     vm.next_verse = function () {
-      for (title in vm.qasidas[vm.current_qasida])
-      {
-        if (vm.current_verse < vm.qasidas[vm.current_qasida][title].length - 1) {
-            vm.current_verse++;
-            vm.check_better_translation(vm.qasidas[vm.current_qasida][title]);
-        }
+      
+      if (vm.current_verse < vm.qasidas[vm.current_qasida][1].length - 1) {
+        vm.current_verse++;
+        vm.check_better_translation(vm.verses[vm.current_verse]);
       }
         
     };
@@ -203,5 +200,3 @@ angular.module('sharabelwasl')
     };
 
 });
-
-

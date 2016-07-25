@@ -41,35 +41,34 @@ def resources(name=None):
 # @api.make_ajax
 def search(term=None, lang=None):
     
+    terms = {lang:term}
     keys = ['_title', '_first', '_second']
-    
-    lang_first = '{}_first'.format(lang)
-    user_translations  = '{}_user_translations'.format(lang)
+
     if lang != 'ar':
         #let's translit the word
         term1 = ""
         term2 = ""
         try:
             detect = translator.detect(term)
-            print '>>>>>>>>', detect
             detect = detect[0][0]
 
             if detect['language'] not in settings.LANGUAGES.keys() \
                 or not bool(detect['isReliable']):
                 
                 term1 = translit(term.lower(), 'ar').encode('utf-8')
+                print '>>',term1
                 term2 = translator.translate(term1, source="ar", target=lang)[0]['translatedText']
 
-                term = '{} {} {}'.format(term, term1, term2)    
-        except Exception as e:
-            print '>>>>>>>> ',e
-            term = '{}'.format(term)
+                terms['ar'] = term1.decode('utf-8')
+                terms[lang] = term2
+        except Exception, e:
+            sharabelwasl.logger.exception("exception in translit logic ")
+    
+    sharabelwasl.logger.info(u'executing search for terms %s .  Original query is %s %s' % (terms, term, lang))
+    
+    es_results, ordered = api.search(terms)
 
-        
-        print '>>>>>>>>>>', term
-    es_results, ordered = api.search(term)
-
-    print '>>>>>>>>>>>>> returning %d qasidas' % len(ordered)
+    sharabelwasl.logger.info(u'returning  %d qasidas' % len(ordered))
     response = dict(next='search',data=ordered)
     return flask.jsonify(response)
 

@@ -8,30 +8,31 @@
   <table class="table  table-borderless text-right col-xs-11" >
   <thead class="thead-inverse">
     <tr>
-      <th colspan="3" ng-repeat="(title, verses) in vm.qasidas[vm.current_qasida]" class="col-xs-12">
-          <span class="lead">{a vm.fix_title(verses[vm.current_verse]['na_title']) a}</span>
+      <th colspan="3" class="col-xs-12">
+          <span class="lead">{a vm.fix_title(vm.qasidas[vm.current_qasida][1][0]['na_title']) a}</span>
       </th>
     </tr>
     <tr>
-      <th colspan="3" ng-repeat="(title, verses) in vm.qasidas[vm.current_qasida]" class="col-xs-12">
-          <span class="lead">Poem # {a verses[vm.current_verse]['qasida_number'] a} called {a verses[vm.current_verse][vm.lang_title] a}</span>
+      <th colspan="3">
+          <span class="lead">Poem # {a vm.qasidas[vm.current_qasida][1][0]['qasida_number'] a} called {a vm.qasidas[vm.current_qasida][1][0][vm.lang_title] a}</span>
       </th>
     </tr>
   </thead>
-  <tbody ng-repeat="(title, verses) in vm.qasidas[vm.current_qasida]" class="tbody">
+  <!-- <tbody ng-repeat="verses in vm.qasidas[vm.current_qasida]" class="tbody"> -->
+  <tbody class="tbody">
     <tr>
-      <td class="col-xs-5"><big>{a verses[vm.current_verse]['ar_second'] a}</big></td>
-      <td class="col-xs-5"><big>{a verses[vm.current_verse]['ar_first'] a}</big></td>
-      <td  class="col-xs-1" ><big>{a verses[vm.current_verse]['line_number'] a}</big></th>
+      <td class="col-xs-5">{a vm.verses[vm.current_verse]['ar_second'] a}</td>
+      <td class="col-xs-5"><big>{a vm.verses[vm.current_verse]['ar_first'] a}</big></td>
+      <td  class="col-xs-1" ><big>{a vm.verses[vm.current_verse]['line_number'] a}</big></th>
     </tr>
     <tr ng-show="vm.get_current_lang() != 'ar'">
-      <td class="col-xs-5"><big>{a verses[vm.current_verse][vm.lang_first] a}</big></td>
-      <td class="col-xs-5"> <big>{a verses[vm.current_verse][vm.lang_second] a}</big></td>
+      <td class="col-xs-5"><big>{a vm.verses[vm.current_verse][vm.lang_first] a}</big></td>
+      <td class="col-xs-5"> <big>{a vm.verses[vm.current_verse][vm.lang_second] a}</big></td>
       <td class="col-xs-1">&nbsp;</th>
     </tr>
     <tr>
-      <td class="col-xs-5"><input type="text" placeholder="{a verses[vm.current_verse][vm.lang_first] a}" /></td>
-      <td class="col-xs-5"> <input type="text"  placeholder="{a verses[vm.current_verse][vm.lang_second] a}" /></td>
+      <td class="col-xs-5"><input type="text" placeholder="{a vm.verses[vm.current_verse][vm.lang_first] a}" /></td>
+      <td class="col-xs-5"> <input type="text"  placeholder="{a vm.verses[vm.current_verse][vm.lang_second] a}" /></td>
       <td class="col-xs-1"><button class="btn-sm btn-success" >Save</button></td>
     </tr>
     <tr>
@@ -42,10 +43,10 @@
               <button class="btn btn-primary" ng-click="vm.prev_verse()" ng-class="{ 'disabled' : vm.current_verse == 0 }"><span class="glyphicon glyphicon-chevron-left"></span></button>
             </td>
             <td ng-repeat="n in vm.range(verses.length)" >
-              <a href ng-click="vm.set_verse(n)">{a verses[n]['line_number'] a}</a>
+              <a href ng-click="vm.set_verse(n)">{a vm.verses[n]['line_number'] a}</a>
             </td>
             <td class="text-center">
-              <button class="btn btn-primary" ng-click="vm.next_verse()" ng-class="{ 'disabled' : vm.current_verse == verses.length-1 }"><span class="glyphicon glyphicon-chevron-right"></span></button>
+              <button class="btn btn-primary" ng-click="vm.next_verse()" ng-class="{ 'disabled' : vm.current_verse == vm.verses.length-1 }"><span class="glyphicon glyphicon-chevron-right"></span></button>
             </td>
           </tr>
         </table>
@@ -57,12 +58,12 @@
           <tr>
             <td class="text-center">
               <button class="btn btn-primary" ng-click="vm.prev_qasida()" ng-class="{ 'disabled' : vm._prev_qasida == -1 }">
-                <span class="glyphicon glyphicon-chevron-left"></span><span ng-repeat="(title, verses) in vm.qasidas[vm._prev_qasida]">{a verses[0][vm.lang_title] a}</span>
+                <span class="glyphicon glyphicon-chevron-left"></span><span>{a vm.qasidas[vm._prev_qasida][1][0][vm.lang_title] a}</span>
               </button>
             </td>
             <td class="text-center">
               <button class="btn btn-primary" ng-class="{ 'disabled' : vm._next_qasida == vm.qasidas.length}" ng-click="vm.next_qasida()" >
-                <span ng-repeat="(title, verses) in vm.qasidas[vm._next_qasida]">{a verses[0][vm.lang_title] a}</span><span class="glyphicon glyphicon-chevron-right"></span>
+                <span >{a vm.qasidas[vm._next_qasida][1][0][vm.lang_title] a}</span><span class="glyphicon glyphicon-chevron-right"></span>
               </button>
             </td>
           </tr>
