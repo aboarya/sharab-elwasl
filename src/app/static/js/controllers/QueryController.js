@@ -14,8 +14,7 @@ angular.module('sharabelwasl')
     var vm = this;
     // $scope.is_loading = false;
     vm.query = {"term" : "", "template_url" : "/partial/search-section"};
-    vm.cached_verses = [];
-    
+    vm.cached_verses = []; vm.warning = false;
 
     vm.get_current_lang = function() {
       var lang = $translateLocalStorage.get();
@@ -73,6 +72,9 @@ angular.module('sharabelwasl')
     }
 
     vm.user_search = function() {
+      if (vm.query.term.length == 0) {
+        vm.warning = true; return;
+      }
       vm.execute_search(encodeURI(vm.query.term));
     };
 

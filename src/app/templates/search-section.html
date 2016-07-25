@@ -3,26 +3,31 @@
     <div class="row ">
       <img src="/static/img/search-logo.png" class="img-responsive center-block"/>
     </div>
-    <div class="row" id="search" >
-      <div class="col-xs-12 text-center">
-        <form class="form-inline">
-          <div class="form-group">
-            <input type="text" ng-model="vm.query.term" class="form-control" placeholder='{a "content.search.tip" | translate a}'>
-          </div>
-          <div class="btn-group">
-            <button ng-click="vm.search()" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
-              {a "content.search.placeholder" | translate a}
+    <div class="row clearfix">
+      <div class="col-md-6 col-md-offset-3 column" >
+        <form role="form" ng-submit="vm.search()">
+            <div class="alert alert-warning" ng-show="vm.warning && vm.query.term.length == 0" >
+              <strong>Empty search!</strong> 
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="vm.query.term" class="form-control" placeholder='{a "content.search.tip" | translate a}'>
+            </div>
+            <div class="col-xs-12 btn-group">
+              <div class="col-xs-6 text-center" style="padding-left: 5px;">
+                <button style="width: 155px;" type="submit" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+                {a "content.search.placeholder" | translate a}
+                </button>
+              </div>
+            <div class="col-xs-6 text-center" style="padding-left: 5px;">
+              <button style="width: 155px;" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+              {a "content.search.popularLabel" | translate a} <span class="caret"></span>
             </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+              <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
+              <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
+              <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
+            </ul>
           </div>
-          <div class="btn-group" uib-dropdown keyboard-nav>
-          <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
-            {a "content.search.popularLabel" | translate a} <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-            <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
-            <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
-            <li role="menuitem"><a href ng-click="vm.popular_search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
-          </ul>
         </div>
       </form>
     </div>
