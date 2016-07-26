@@ -14,6 +14,7 @@ angular.module('sharabelwasl')
     var vm = $scope;
     var $_ = $rootScope;
 
+    angular.element(document).find("html").addClass("full");
     vm.query = {"term" : "", "template_url" : "/partial/search-section"};
     vm.cached_verses = []; vm.warning = false;
 
@@ -36,9 +37,6 @@ angular.module('sharabelwasl')
     };
 
     vm.search = function(obj) {
-      vm.lang_first = $_.get_current_lang()+"_first";
-      vm.lang_second = $_.get_current_lang()+"_second";
-      vm.lang_title = $_.get_current_lang()+"_title";
       
       if (typeof obj == 'undefined') {
         vm.user_search();
