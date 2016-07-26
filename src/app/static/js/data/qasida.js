@@ -7,10 +7,11 @@ function Verse (index, lang) {
 
 };
 
-function Qasida (lang, verses) {
+function Qasida (lang, number, verses) {
 
   this._verses     = [];
   this.lang        = lang;
+  this.number      = number;
   this.lang_title  = lang+'_title';
   this.lang_first  = lang+'_first';
   this.lang_first  = lang+'_second';
@@ -22,16 +23,8 @@ function Qasida (lang, verses) {
   }
 };
 
-var _range = function (start, end) {
-  var ret = [];
-  if (!end) {
-    end = start;
-    start = 0;
-  }
-  for (var i = start; i < end; i++) {
-    ret.push(i);
-  }
-  return ret;
+var _range = function (count) {
+  return count
 };
 
 var _prev = function (index) {

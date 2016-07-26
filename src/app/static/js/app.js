@@ -20,6 +20,24 @@ var sharabelwasl = angular
     'xeditable',
     'ui.router'
   ])
+  .factory('$qasidas', function() {
+
+    var _ = [];
+    var service = {};    
+
+    service.clear = function() {
+      _ = [];
+    }
+    service.add = function(q) {
+        _.push(q);
+    };
+
+    service.items = function() {
+        return _;
+    };
+
+    return service;
+  })
   .constant('DEBUG_MODE', /*DEBUG_MODE*/true/*DEBUG_MODE*/)
   .constant('VERSION_TAG', /*VERSION_TAG_START*/new Date().getTime()/*VERSION_TAG_END*/)
   .constant('LOCALES', {
@@ -105,10 +123,7 @@ var sharabelwasl = angular
         })
       .state('search', {
         url: '/search',
-        templateUrl: '/partial/results-section',
-        params : {
-          qasidas : null
-        }
+        templateUrl: '/partial/results-section'
       })
         
 }]);

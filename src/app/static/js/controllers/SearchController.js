@@ -9,10 +9,10 @@
 // sharabelwasl.requests = sharabelwasl.requests || {};
 
 angular.module('sharabelwasl')
-  .controller('SearchController', function($rootScope, $scope, $state, $http, $translateLocalStorage) {
-    
+  .controller('SearchController', function($rootScope, $scope, $state, $http, $qasidas, $translateLocalStorage) {
+
+    var vm = $scope;
     var $_ = $rootScope;
-    $_.qasidas = [];
 
     vm.query = {"term" : "", "template_url" : "/partial/search-section"};
     vm.cached_verses = []; vm.warning = false;
@@ -60,12 +60,13 @@ angular.module('sharabelwasl')
     
     vm.search_callback = function(data) {
 
-      vm.qasidas = [];
+      $qasidas.clear();
+      
       for (var i=0; i < data.length; i++) {
-        qasidas.push(new Qasida(i, vm.lang, data[i][0], data.length));
+        $qasidas.add(new Qasida(i, vm.lang, data[i][1]));
       };
       
-      $state.go("search", {qasidas : vm.qasidas});
+      $state.go("search");
 
     };
 
