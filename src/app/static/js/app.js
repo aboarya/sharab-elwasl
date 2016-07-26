@@ -12,11 +12,13 @@ var sharabelwasl = angular
   .module('sharabelwasl', [
     'ngCookies',
     'ngResource',
+    'ngRoute',
     'ngSanitize',
     'pascalprecht.translate',
     'ui.bootstrap',
     'tmh.dynamicLocale',
-    'xeditable'
+    'xeditable',
+    'ui.router'
   ])
   .constant('DEBUG_MODE', /*DEBUG_MODE*/true/*DEBUG_MODE*/)
   .constant('VERSION_TAG', /*VERSION_TAG_START*/new Date().getTime()/*VERSION_TAG_END*/)
@@ -30,8 +32,42 @@ var sharabelwasl = angular
     },
     'preferredLocale': 'ar'
   })
-  .run(function(editableOptions) {
-    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  .run(function($rootScope, $route, $location, $http, $state){
+      $rootScope.is_loading = function () {
+        return $http.pendingRequests.length > 0;
+      };
+
+    $rootScope.$watch($rootScope.is_loading, function (v) {
+      if(v){
+        angular.element(document).find("html").addClass("loading");
+      } else{
+          setTimeout(function(){angular.element(document).find("html").removeClass("loading");}, 200);
+      }
+    });
+
+    $rootScope.ajax = function(path, _callback) {
+      
+      $http({
+          url      : path,
+          method   : 'GET',
+          headers : { 'X-Requested-With' :'XMLHttpRequest'}
+      })
+      .then(function(response) {
+        _callback(response.data['data']);
+      });
+    }
+
+    $rootScope.$on('$locationChangeSuccess', function() {
+        // $rootScope.actualLocation = $location.path();
+    });        
+
+    $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
+      if($rootScope.actualLocation === newLocation) {
+          $state.go('main', {});
+          // var x = $state;
+          // var y = "";
+      }
+    });
   })
   .config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.startSymbol('{a');
@@ -58,5 +94,22 @@ var sharabelwasl = angular
   // Angular Dynamic Locale
   .config(function (tmhDynamicLocaleProvider) {
     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
-});
+  })
+  .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/main');
+
+    $stateProvider
+      .state('main', {
+          url: '/main',
+          templateUrl: '/partial/search-section'
+        })
+      .state('search', {
+        url: '/search',
+        templateUrl: '/partial/results-section',
+        params : {
+          qasidas : null
+        }
+      })
+        
+}]);
 
