@@ -1,71 +1,30 @@
-<div  class="row back-btn text-center" ng-controller="ReadController">
-  <div class="col-xs-12">
+<div class="row back-btn text-center" ng-controller="ReadController">
+  <div  class="col-xs-12 text-center" >
     <button class="btn btn-primary" ng-click="back_to_search()">Back to Search</button>
   </div>
-</div>
-{a index a}
-{#<div  class="row full-page">
-  <div class="col-xs-11">
-  <table class="table  table-borderless text-right col-xs-11" >
-  <thead class="thead-inverse">
-    <tr >
-      <th colspan="3" class="col-xs-12">
-          <span class="lead">q = {a q a} and v = {a v a} and {a qasidas a}</span>
-      </th>
-    </tr>
-    <tr>
-      <th colspan="3">
-          <span class="lead">Poem # {a qasida.number a} called {a qasida.lang_title a}</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="tbody" ng-repeat="verse in qasida.verses()[_v]">
-    <tr>
-      <td class="col-xs-5">{a verse.ar_second a}</td>
-      <td class="col-xs-5"><big>{a verse.ar_first a}</big></td>
-      <td  class="col-xs-1" ><big>{a verse.line_number a}</big></th>
-    </tr>
-    <tr ng-show="get_current_lang() != 'ar'">
-      <td class="col-xs-5"><big>{a verse.lang_first a}</big></td>
-      <td class="col-xs-5"> <big>{a verse.lang_second a}</big></td>
-      <td class="col-xs-1">&nbsp;</th>
-    </tr>
-    <tr>
-      <td colspan="3" align="right">
-        <table class="table table-bordered " id="verse_nav" class="col-xs-6" >
-          <tr>
-            <td class="text-center">
-              <button class="btn btn-primary" ng-click="verse.prev()" ng-class="{ 'disabled' : _v == 0 }"><span class="glyphicon glyphicon-chevron-left"></span></button>
-            </td>
-            <td ng-repeat="n in verse.range(qasida.verses()[_v].length)" >
-              <a href ng-click="set_verse(n)">{a verse.line_number a}</a>
-            </td>
-            <td class="text-center">
-              <button class="btn btn-primary" ng-click="next_verse()" ng-class="{ 'disabled' : _v == qasida.verses()[_v].length-1 }"><span class="glyphicon glyphicon-chevron-right"></span></button>
-            </td>
+  <div class="col-xs-12 text-center" style="margin-top:25px;" ng-repeat="qasida in qasidas | starting:_q | limitTo:1">
+    <div class="col-xs-12 text-center"><span class="lead">{a qasida.ar_title a}</span></div>
+    <div class="col-xs-12" style="margin-top:25px;">
+      <table class="table  table-borderless text-right col-xs-11">
+        <tbody class="tbody">
+          <tr ng-repeat="verse in qasida.verses()">  
+            <td class="col-xs-6 lead">{a verse.ar_second a}</td>
+            <td class="col-xs-6 lead">{a verse.ar_first a}</td>
           </tr>
-        </table>
-      </td>
-    </tr>
-    <tr align="center">
-      <td colspan="3" >
-        <table class="table table-bordered " id="verse_nav" class="col-xs-6" >
-          <tr>
-            <td class="text-center">
-              <button class="btn btn-primary" ng-click="prev_qasida()" ng-class="{ 'disabled' : _q == 0 }">
-                <span class="glyphicon glyphicon-chevron-left"></span><span>{a qasida.lang_title a}</span>
-              </button>
-            </td>
-            <td class="text-center">
-              <button class="btn btn-primary" ng-class="{ 'disabled' : _q == qasidas.length-1}" ng-click="qasida.next()" >
-                <span >{a qasida.lang_title a}</span><span class="glyphicon glyphicon-chevron-right"></span>
-              </button>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-xs-12 text-center">
+    <div class="col-xs-6">
+      <button class="btn btn-primary" ng-click="_q = _q-1" ng-class="{ 'disabled' : _q == 0 }">
+        <span class="glyphicon glyphicon-chevron-left"></span><span>{a qasidas[_q-1].title a}</span>
+      </button>
+    </div>
+    <div class="col-xs-6">
+      <button class="btn btn-primary" ng-class="{ 'disabled' : _q == qasidas.length-1}" ng-click="_q = _q+1" >
+        <span >{a qasidas[_q+1].title a}</span><span class="glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+  </div>
 </div>
-#}

@@ -50,7 +50,8 @@ var sharabelwasl = angular
     },
     'preferredLocale': 'ar'
   })
-  .run(function($rootScope, $route, $location, $http, $state){
+  .run(function($rootScope, $route, $location, $http, $state, $translateLocalStorage){
+
       $rootScope.is_loading = function () {
         return $http.pendingRequests.length > 0;
       };
@@ -86,6 +87,25 @@ var sharabelwasl = angular
           // var y = "";
       }
     });
+
+    $rootScope.get_current_lang = function() {
+      var lang = $translateLocalStorage.get();
+      
+      if (typeof(lang) == "undefined" || lang == "undefined" || lang == null) {
+          var lang = window.navigator.userLanguage || window.navigator.language;
+          lang = lang.split('-')[0];
+      }
+
+      return lang;
+    };
+
+
+  })
+  .filter('starting', function() {
+    return function(input, start) {
+        start = +start;
+        return input.slice(start);
+    }
   })
   .config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.startSymbol('{a');

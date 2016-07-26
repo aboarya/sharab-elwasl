@@ -9,7 +9,7 @@
 // sharabelwasl.requests = sharabelwasl.requests || {};
 
 angular.module('sharabelwasl')
-  .controller('SearchController', function($rootScope, $scope, $state, $http, $qasidas, $translateLocalStorage) {
+  .controller('SearchController', function($rootScope, $scope, $state, $http, $qasidas) {
 
     var vm = $scope;
     var $_ = $rootScope;
@@ -17,20 +17,9 @@ angular.module('sharabelwasl')
     vm.query = {"term" : "", "template_url" : "/partial/search-section"};
     vm.cached_verses = []; vm.warning = false;
 
-    vm.get_current_lang = function() {
-      var lang = $translateLocalStorage.get();
-      
-      if (typeof(lang) == "undefined" || lang == "undefined" || lang == null) {
-          var lang = window.navigator.userLanguage || window.navigator.language;
-          lang = lang.split('-')[0];
-      }
-
-      return lang;
-    };
-
     vm.execute_search = function(term) {
       angular.element(document).find("html").removeClass("full");
-      var path = '/search/'+vm.get_current_lang()+'/'+term;
+      var path = '/search/'+$_.get_current_lang()+'/'+term;
       $_.ajax(path, vm.search_callback);
     }
 
@@ -47,9 +36,9 @@ angular.module('sharabelwasl')
     };
 
     vm.search = function(obj) {
-      vm.lang_first = vm.get_current_lang()+"_first";
-      vm.lang_second = vm.get_current_lang()+"_second";
-      vm.lang_title = vm.get_current_lang()+"_title";
+      vm.lang_first = $_.get_current_lang()+"_first";
+      vm.lang_second = $_.get_current_lang()+"_second";
+      vm.lang_title = $_.get_current_lang()+"_title";
       
       if (typeof obj == 'undefined') {
         vm.user_search();
@@ -63,7 +52,7 @@ angular.module('sharabelwasl')
       $qasidas.clear();
       
       for (var i=0; i < data.length; i++) {
-        $qasidas.add(new Qasida(i, vm.lang, data[i][1]));
+        $qasidas.add(new Qasida($_.get_current_lang(), data[i][0], data[i][1]));
       };
       
       $state.go("search");

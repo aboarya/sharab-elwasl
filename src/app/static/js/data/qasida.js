@@ -1,26 +1,44 @@
 
-function Verse (index, lang) {
-  
-  this.lang_first  = lang+'_first';
-  this.lang_first  = lang+'_second';
-  this.count       = count;
+function Verse (lang, verse) {
 
+  var v = this;
+
+  this.init = function(lang, verse) {
+    for (var prop in verse) {
+      v[prop] = verse[prop];
+    }
+    var f = lang+'_first'; var s = lang+'_second';
+    v["first"] = verse[f];
+    v["second"] = verse[s];
+  };
+
+  this.init(lang, verse);
 };
 
 function Qasida (lang, number, verses) {
 
   this._verses     = [];
-  this.lang        = lang;
   this.number      = number;
-  this.lang_title  = lang+'_title';
-  this.lang_first  = lang+'_first';
-  this.lang_first  = lang+'_second';
-  this.ar_title    = verses[0]['na_title'];
-  this.title       = verses[0][this.lang_title];
   
   this.verses = function() {
     return this._verses;
   }
+
+  this.init = function(lang, verses) {
+
+    for (var i =0; i < verses.length; i++) {
+      this._verses.push(new Verse(lang, verses[i]));
+    };
+
+    // this.lang_title  = verses[0][lang+'_title'];
+    // this.lang_first  = verses[0][lang+'_first'];
+    // this.lang_first  = verses[0][lang+'_second'];
+    this.ar_title    = verses[0]['na_title'].replace(')', '').replace('(', '');
+    this.title       = verses[0]['ar_title'];
+    this.lang        = lang;
+  };
+
+  this.init(lang, verses);
 };
 
 var _range = function (count) {
@@ -34,6 +52,7 @@ var _prev = function (index) {
 };
 
 var _next = function (index, count) {
+
   if (index < count) {
     index++;
   };
@@ -42,12 +61,6 @@ var _next = function (index, count) {
 
 var _set = function () {
   return this._list[this.n];
-};
-
-Qasida.prototype.init = function(verses) {
-  for (var i =0; i < verses.length; i++) {
-    this._verses.push(new Verse(i, this.lang));
-  };
 };
 
 Qasida.prototype.prev = _prev
