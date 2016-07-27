@@ -1,8 +1,11 @@
 {
-    "content.search.tip": "Qasidas traduites par Google Translate",
-    "content.search.popularLabel": "Recherches Populaires",
-    "content.search.popular1": "madad",
-    "content.search.popular2": "wasl",
-    "content.search.popular3": "amour",
-    "content.search.placeholder": "chercher"
+	"site.title": "Rechercher les Qasidas de Sharab Al Wasl",
+    "search.tip": "Qasidas traduites par Google Translate",
+    "search.popularLabel": "Recherches Populaires",
+    "search.popular1": "madad",
+    "search.popular2": "wasl",
+    "search.popular3": "amour",
+    "search.placeholder": "chercher",
+    "search.warning": "Nous ne pouvons pas exécuter une recherche vide!",
+    "search.back": "arrière"
 }

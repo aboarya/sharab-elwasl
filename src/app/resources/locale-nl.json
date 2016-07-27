@@ -1,9 +1,11 @@
 {
-    "content.search.tip": "Qasidas vertaald door Google Translate",
-    "content.search.popularLabel": "Populaire Zoekopdrachten",
-    "content.search.popular1": "wasl",
-    "content.search.popular2": "disuqi",
-    "content.search.popular3": "madad",
-
-    "content.search.placeholder": "zoeken"
+	"site.title": "Zoeken in de Qasidas van Sharab Al Wasl",
+    "search.tip": "Qasidas vertaald door Google Translate",
+    "search.popularLabel": "Populaire Zoekopdrachten",
+    "search.popular1": "wasl",
+    "search.popular2": "disuqi",
+    "search.popular3": "madad",
+    "search.placeholder": "zoeken",
+    "search.warning": "We kunnen een lege zoekopdracht niet uitvoeren!",
+    "search.back": "terug"
 }

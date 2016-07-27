@@ -6,14 +6,15 @@
  * Common application controller
  */
  
-angular.module('sharabelwasl').controller('LanguageController', function(LanguageSelectService) {
+angular.module('sharabelwasl').controller('LanguageController', function($state, LanguageSelectService) {
 	var vm = this;
 
 	vm.currentLocaleDisplayName = LanguageSelectService.getLocaleDisplayName();
     vm.localesDisplayNames = LanguageSelectService.getLocalesDisplayNames();
     
     vm.changeLanguage = function (locale) {
-      LanguageSelectService.setLocaleByDisplayName(locale);
+		LanguageSelectService.setLocaleByDisplayName(locale);
+		
     };
     
 });

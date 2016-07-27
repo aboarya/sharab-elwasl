@@ -1,8 +1,11 @@
 {
-    "content.search.tip": "Qasidas von Google Translate übersetzt",
-    "content.search.popularLabel": "Beliebte Suchbegriffe",
-    "content.search.popular1": "madad",
-    "content.search.popular2": "wasl",
-    "content.search.popular3": "disuqi",
-    "content.search.placeholder": "suchen"
+	"site.title": "Suche die Qasidas von Sharab EL Wasl",
+    "search.tip": "Qasidas von Google Translate übersetzt",
+    "search.popularLabel": "Beliebte Suchbegriffe",
+    "search.popular1": "madad",
+    "search.popular2": "wasl",
+    "search.popular3": "disuqi",
+    "search.placeholder": "suchen",
+    "search.warning": "Wir können nicht eine leere Suche ausführen!",
+    "search.back": "Zurück"
 }

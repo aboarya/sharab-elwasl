@@ -1,8 +1,11 @@
 {
-    "content.search.tip": "ابحث في جمبع بيوت شراب الوصل",
-    "content.search.popularLabel": "ابحاث متكررة",
-    "content.search.popular1": "حر نارك",
-    "content.search.popular2": "الحب",
-    "content.search.popular3": "مدد",
-    "content.search.placeholder": "ابحث"
+	"site.title": "إبحث في جميع بيوت شراب الواصل",
+    "search.tip": "ابحث في جمبع بيوت شراب الوصل",
+    "search.popularLabel": "ابحاث متكررة",
+    "search.popular1": "حر نارك",
+    "search.popular2": "الحب",
+    "search.popular3": "مدد",
+    "search.placeholder": "ابحث",
+    "search.warning": "نحن لا يمكن تنفيذ عملية بحث فارغة!",
+    "search.back": "العودة"
 }

@@ -5,8 +5,6 @@
  * # QueryController
  * Common application controller
  */
-// var sharabelwasl = angular.module('sharabelwasl');
-// sharabelwasl.requests = sharabelwasl.requests || {};
 
 angular.module('sharabelwasl')
   .controller('SearchController', function($rootScope, $scope, $state, $http, $qasidas) {
@@ -15,14 +13,15 @@ angular.module('sharabelwasl')
     var $_ = $rootScope;
 
     angular.element(document).find("html").addClass("full");
-    vm.query = {"term" : "", "template_url" : "/partial/search-section"};
+    vm.query = {"term" : ""};
+
     vm.cached_verses = []; vm.warning = false;
 
     vm.execute_search = function(term) {
       angular.element(document).find("html").removeClass("full");
       var path = '/search/'+$_.get_current_lang()+'/'+term;
       $_.ajax(path, vm.search_callback);
-    }
+    };
 
     
     vm.user_search = function() {

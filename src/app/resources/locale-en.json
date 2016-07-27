@@ -1,9 +1,13 @@
 {
-    "content.search.tip": "Qasidas translated with Google Translate",
-    "content.search.popularLabel": "Popular Searches",
-    "content.search.popular1": "madad",
-    "content.search.popular2": "wasl",
-    "content.search.popular3": "disuqi",
-    "content.search.placeholder": "search"
+	"site.title": "Search Qasidas of Sharab El-Wasl",
+    "search.tip": "Qasidas translated with Google Translate",
+    "search.popularLabel": "Popular Searches",
+    "search.popular1": "madad",
+    "search.popular2": "wasl",
+    "search.popular3": "disuqi",
+    "search.placeholder": "search",
+    "search.warning": "We cannot execute an empty search!",
+    "search.back": "back"
+
 
 }

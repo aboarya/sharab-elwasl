@@ -7,25 +7,25 @@
       <div class="col-md-6 col-md-offset-3 column" >
         <form role="form" ng-submit="search()">
             <div class="alert alert-warning" ng-show="warning && query.term.length == 0" >
-              <strong>Empty search!</strong> 
+              <strong>{a "search.warning" | translate a}</strong> 
             </div>
             <div class="form-group">
-                <input type="text" ng-model="query.term" class="form-control" placeholder='{a "content.search.tip" | translate a}'>
+                <input type="text" ng-model="query.term" class="form-control" placeholder='{a "search.tip" | translate a}'>
             </div>
             <div class="col-xs-12 btn-group">
               <div class="col-xs-6 text-center" style="padding-left: 5px;">
-                <button style="width: 155px;" type="submit" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" >
-                {a "content.search.placeholder" | translate a}
+                <button style="width: 195px;" type="submit" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" >
+                {a "search.placeholder" | translate a}
                 </button>
               </div>
             <div class="col-xs-6 text-center btn-group" uib-dropdown style="padding-left: 5px;">
-              <button style="width: 155px;" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
-              {a "content.search.popularLabel" | translate a} <span class="caret"></span>
+              <button style="width: 195px;" id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+              {a "search.popularLabel" | translate a} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-              <li role="menuitem"><a href ng-click="popular_search($event)" search='{a "content.search.popular1" | translate a}'>{a "content.search.popular1" | translate a}</a></li>
-              <li role="menuitem"><a href ng-click="popular_search($event)" search='{a "content.search.popular2" | translate a}'>{a "content.search.popular2" | translate a}</a></li>
-              <li role="menuitem"><a href ng-click="popular_search($event)" search='{a "content.search.popular3" | translate a}'>{a "content.search.popular3" | translate a}</a></li>
+              <li role="menuitem"><a href ng-click="popular_search($event)" search='{a "search.popular1" | translate a}'>{a "search.popular1" | translate a}</a></li>
+              <li role="menuitem"><a href ng-click="popular_search($event)" search='{a "search.popular2" | translate a}'>{a "search.popular2" | translate a}</a></li>
+              <li role="menuitem"><a href ng-click="popular_search($event)" search='{a "search.popular3" | translate a}'>{a "search.popular3" | translate a}</a></li>
             </ul>
           </div>
         </div>
