@@ -56,48 +56,48 @@ var sharabelwasl = angular
         return $http.pendingRequests.length > 0;
       };
 
-    $rootScope.$watch($rootScope.is_loading, function (v) {
-      if(v){
-        angular.element(document).find("html").addClass("loading");
-      } else{
+      $rootScope.$watch($rootScope.is_loading, function (v) {
+        if(v){
+          angular.element(document).find("html").addClass("loading");
+        } else{
           setTimeout(function(){angular.element(document).find("html").removeClass("loading");}, 200);
-      }
-    });
+        }
+      });
 
-    $rootScope.ajax = function(path, _callback) {
+      $rootScope.ajax = function(path, _callback) {
       
-      $http({
+        $http({
           url      : path,
           method   : 'GET',
           headers : { 'X-Requested-With' :'XMLHttpRequest'}
-      })
-      .then(function(response) {
-        _callback(response.data['data']);
-      });
-    }
+        })
+        .then(function(response) {
+          _callback(response.data['data']);
+        });
+      }
 
-    $rootScope.$on('$locationChangeSuccess', function() {
+      $rootScope.$on('$locationChangeSuccess', function() {
         // $rootScope.actualLocation = $location.path();
-    });        
+      });        
 
-    $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
-      if($rootScope.actualLocation === newLocation) {
-          $state.go('main', {});
+      $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
+        if($rootScope.actualLocation === newLocation) {
+            $state.go('main', {});
           // var x = $state;
           // var y = "";
-      }
-    });
+        }
+      });
 
-    $rootScope.get_current_lang = function() {
-      var lang = $translateLocalStorage.get();
+      $rootScope.get_current_lang = function() {
+        var lang = $translateLocalStorage.get();
       
-      if (typeof(lang) == "undefined" || lang == "undefined" || lang == null) {
+        if (typeof(lang) == "undefined" || lang == "undefined" || lang == null) {
           var lang = window.navigator.userLanguage || window.navigator.language;
           lang = lang.split('-')[0];
-      }
+        }
 
-      return lang;
-    };
+        return lang;
+      };
 
 
   })
@@ -111,16 +111,12 @@ var sharabelwasl = angular
     $interpolateProvider.startSymbol('{a');
     $interpolateProvider.endSymbol('a}');
   }])
-  // Angular debug info
   .config(function ($compileProvider, DEBUG_MODE) {
     if (!DEBUG_MODE) {
       $compileProvider.debugInfoEnabled(false);// disables AngularJS debug info
     }
   })
-  // Angular Translate
   .config(function ($translateProvider, DEBUG_MODE, LOCALES) {
-    
-
     $translateProvider.useStaticFilesLoader({
       prefix: 'resources/locale-',
       suffix: '.json'
@@ -133,6 +129,16 @@ var sharabelwasl = angular
   .config(function (tmhDynamicLocaleProvider) {
     tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
   })
+  .config(function($httpProvider) {
+      // $httpProvider.defaults.useXDomain = true;
+      // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+      httpProvider.defaults.useXDomain = true;
+      $httpProvider.defaults.withCredentials = true;
+      delete $httpProvider.defaults.headers.common["X-Requested-With"];
+      $httpProvider.defaults.headers.common["Accept"] = "application/json";
+      $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
+    }
+  ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/main');
 
