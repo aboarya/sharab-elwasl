@@ -13,6 +13,14 @@ angular.module('sharabelwasl').controller('LanguageController', function($state,
     vm.localesDisplayNames = LanguageSelectService.getLocalesDisplayNames();
     
     vm.changeLanguage = function (locale) {
+    	
+    	if (locale == 'العربيه') {
+    	
+    		document.getElementById("search_text").dir = "rtl";
+    	} else {
+    		document.getElementById("search_text").dir = "ltr";
+    	}
+    	
 		LanguageSelectService.setLocaleByDisplayName(locale);
 		
     };
