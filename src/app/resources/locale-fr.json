@@ -7,5 +7,6 @@
     "search.popular3": "amour",
     "search.placeholder": "chercher",
     "search.warning": "Nous ne pouvons pas exécuter une recherche vide!",
-    "search.back": "arrière"
+    "search.back": "arrière",
+    "read.modal.close" : "Fermer"
 }

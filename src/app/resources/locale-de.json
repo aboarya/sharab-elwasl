@@ -7,5 +7,6 @@
     "search.popular3": "disuqi",
     "search.placeholder": "suchen",
     "search.warning": "Wir können nicht eine leere Suche ausführen!",
-    "search.back": "Zurück"
+    "search.back": "Zurück",
+    "read.modal.close" : "Schliesen"
 }

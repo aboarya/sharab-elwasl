@@ -42,7 +42,7 @@ function Qasida (lang, number, verses) {
 };
 
 var _range = function (count) {
-  return count
+  return new Array(count);
 };
 
 var _prev = function (index) {
@@ -73,4 +73,3 @@ Qasida.prototype.set = _set;
 Verse.prototype.set = _set;
 
 Qasida.prototype.range = _range;
-Verse.prototype.range = _range;

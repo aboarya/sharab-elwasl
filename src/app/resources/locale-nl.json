@@ -7,5 +7,6 @@
     "search.popular3": "madad",
     "search.placeholder": "zoeken",
     "search.warning": "We kunnen een lege zoekopdracht niet uitvoeren!",
-    "search.back": "terug"
+    "search.back": "terug",
+    "read.modal.close" : "Dichtbij"
 }

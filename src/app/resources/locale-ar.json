@@ -7,5 +7,6 @@
     "search.popular3": "مدد",
     "search.placeholder": "ابحث",
     "search.warning": "نحن لا يمكن تنفيذ عملية بحث فارغة!",
-    "search.back": "العودة"
+    "search.back": "العودة",
+    "read.modal.close" : "إغلق"
 }

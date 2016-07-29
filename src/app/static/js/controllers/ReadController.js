@@ -20,6 +20,14 @@ angular.module('sharabelwasl')
   	vm.qasidas = $qasidas.items();
   	vm.search = $terms.items();
 
+    vm.set = function(n) {
+      vm._q = n;
+    }
+    vm.range = function(count) {
+
+      return new Array(count);
+    }
+
   	
   	vm.back_to_search = function() {
       $state.go("main");
