@@ -7,8 +7,9 @@
  */
 
 angular.module('sharabelwasl')
-  .controller('SearchController', function($rootScope, $scope, $state, $http, $qasidas) {
+  .controller('SearchController', function($rootScope, $scope, $state, $http, $stateParams, $qasidas) {
 
+    
     var vm = $scope;
     var $_ = $rootScope;
 
@@ -17,9 +18,10 @@ angular.module('sharabelwasl')
 
     vm.cached_verses = []; vm.warning = false;
 
-    vm.execute_search = function(term) {
+    vm.execute_search = function(lang, term) {
+      vm.term = term;
       angular.element(document).find("html").removeClass("full");
-      var path = '/search/'+$_.get_current_lang()+'/'+term;
+      var path = '/search/'+lang+'/'+term;
       $_.ajax(path, vm.search_callback);
     };
 
@@ -28,11 +30,11 @@ angular.module('sharabelwasl')
       if (vm.query.term.length == 0) {
         vm.warning = true; return;
       }
-      vm.execute_search(encodeURI(vm.query.term));
+      vm.execute_search($_.get_current_lang(), encodeURI(vm.query.term));
     };
 
     vm.popular_search = function(obj) {
-      vm.execute_search(encodeURI(obj.target.attributes.search.value));
+      vm.execute_search($_.get_current_lang(), encodeURI(obj.target.attributes.search.value));
     };
 
     vm.search = function(obj) {
@@ -52,8 +54,13 @@ angular.module('sharabelwasl')
         $qasidas.add(new Qasida($_.get_current_lang(), data[i][0], data[i][1]));
       };
       
-      $state.go("search");
+      $state.go("read", {"lang" : $_.get_current_lang(), "term" : vm.term});
 
     };
+
+    if (typeof($stateParams.lang) != 'undefined' && $stateParams.lang != 'undefined') {
+     
+      vm.execute_search($stateParams.lang, encodeURI($stateParams.term));
+    }
 
 });

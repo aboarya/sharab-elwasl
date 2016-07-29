@@ -35,6 +35,28 @@ def group(es_results):
     
     return sorted(results.items(), key=lambda (k,v): v[0]['_score'], reverse=True)
 
+def read(number, start=0, end=10):
+    from elasticsearch import Elasticsearch
+    from app import settings
+    _es = Elasticsearch(settings.ES_HOST)
+
+    _template = { "query" : 
+        {"bool": {"must": {"type" : {"value" : number}}}}, "from":0, "size":900,}
+
+    try:
+        res = _es.search(index="sharab-elwasl", body=_template)
+        
+    except Exception, e:
+        raise e
+        sharabelwasl.logger.exception("exception while searching ES")
+
+    if bool(res['hits']['total']):
+        return [res['_source'] for res in sorted(res['hits']['hits'], key=lambda k: k['_source']['line_number'])]
+
+    return []
+
+
+
 def search(terms):
     from elasticsearch import Elasticsearch
     from app import settings

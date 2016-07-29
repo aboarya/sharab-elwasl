@@ -1,0 +1,17 @@
+
+<table class="table table-border">
+	<thead>
+		<tr>
+			<th colspan="2">{{ verses[0]['title'] | replace(')','') | replace('(', '')}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for verse in verses %}
+			<tr>
+				<td class="col-xs-6 text-center"> {{verse['ar_second']}}</td>
+				<td class="col-xs-6 text-center">{{verse['ar_first']}} </td>
+				<td class="col-xs-1">{{verse['line_number']}}</td>
+			</tr>
+		{%endfor%}
+	</tbody>
+</table>

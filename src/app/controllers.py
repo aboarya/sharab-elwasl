@@ -72,6 +72,12 @@ def search(term=None, lang=None):
     response = dict(next='search',data=ordered)
     return flask.jsonify(response)
 
+@sharabelwasl.route('/read/<number>')
+# @api.make_ajax
+def read(number=None):
+    verses = api.read(number)
+    return flask.render_template('verses.html', verses=verses)
+
 @sharabelwasl.route('/dynamo/scan/<lang>/<qasida_number>/<line_number>')
 # @api.make_ajax
 def scan(lang=None, qasida_number=None, line_number=None):

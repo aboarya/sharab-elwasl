@@ -9,6 +9,7 @@
 angular.module('sharabelwasl')
   .controller('ReadController', function($scope, $state, $qasidas) {
 
+  	
   	var vm = $scope; vm._q = 0; vm._v = 0;
   	vm.qasidas = $qasidas.items();
 
