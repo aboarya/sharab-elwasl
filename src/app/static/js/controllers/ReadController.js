@@ -31,7 +31,8 @@ angular.module('sharabelwasl')
         	return $sce.trustAsHtml(text);
     	}
     	var verse = text.split(' ');
-    	search.includes(" ") ? var terms = search.split(" ") : var terms = [search];
+    	var terms = [];
+    	search.includes(" ") ? terms = search.split(" ") : terms = [search];
     	for (var i =0;i < verse.length;i++) {
     		for (var j=0; j < terms.length; j++) {
     			if (vm.strip_accent(verse[i]) == terms[j]) {
