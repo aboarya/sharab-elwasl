@@ -137,7 +137,7 @@ var sharabelwasl = angular
 
       $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
         if($rootScope.actualLocation === newLocation) {
-          // $state.go('main', {});
+          $state.go('main', {});
         }
       });
 
