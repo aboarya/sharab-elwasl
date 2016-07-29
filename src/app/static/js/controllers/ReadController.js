@@ -31,10 +31,14 @@ angular.module('sharabelwasl')
         	return $sce.trustAsHtml(text);
     	}
     	var verse = text.split(' ');
+    	search.includes(" ") ? var terms = search.split(" ") : var terms = [search];
     	for (var i =0;i < verse.length;i++) {
-    		if (vm.strip_accent(verse[i]) == search) {
-    			verse[i] = '<span class="highlightedText">'+verse[i]+'</span>';
+    		for (var j=0; j < terms.length; j++) {
+    			if (vm.strip_accent(verse[i]) == terms[j]) {
+    				verse[i] = '<span class="highlightedText">'+verse[i]+'</span>';
+    			}	
     		}
+    		
     	}	
     	var html = verse.join(" ");
     	return $sce.trustAsHtml(html);
