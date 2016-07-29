@@ -19,6 +19,8 @@ angular.module('sharabelwasl')
 
   	vm.qasidas = $qasidas.items();
   	vm.search = $terms.items();
+    vm.width = ''+(100 / vm.qasidas.length)+'%;';
+    
 
     vm.set = function(n) {
       vm._q = n;

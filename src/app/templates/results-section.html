@@ -7,9 +7,9 @@
   <div  class="col-xs-12 text-center" >
     <button class="btn btn-primary" ng-click="back_to_search()">{a "search.back" | translate a}</button>
   </div>
-  <div class="col-xs-12" style="padding-top:35px;padding-bottom:35px;">
+  <div class="col-xs-12 " style="padding-top:35px;padding-bottom:35px;">
       <ul class="list-inline">
-        <li class="col-xs-2" ng-repeat="n in range(qasidas.length) track by $index">
+        <li style="width:{a width a}" ng-repeat="n in range(qasidas.length) track by $index">
           <span style="cursor:pointer;color:#337ab7;" ng-click="set($index)">{a qasidas[$index].title a}</span>
         </li>
       </ul>
