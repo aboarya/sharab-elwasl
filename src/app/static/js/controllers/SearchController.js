@@ -59,8 +59,8 @@ angular.module('sharabelwasl')
     };
 
     if (typeof($stateParams.lang) != 'undefined' && $stateParams.lang != 'undefined') {
-     
-      vm.execute_search($stateParams.lang, encodeURI($stateParams.term));
+
+      vm.execute_search($stateParams.lang, $stateParams.term);
     }
 
 });

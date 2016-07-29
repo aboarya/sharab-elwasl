@@ -165,6 +165,5 @@ var sharabelwasl = angular
         }
       }
 
-
   });
 
