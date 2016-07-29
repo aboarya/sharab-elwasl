@@ -132,11 +132,13 @@ var sharabelwasl = angular
       }
 
       $rootScope.$on('$locationChangeSuccess', function() {
-        // $rootScope.actualLocation = $location.path();
+        $rootScope.actualLocation = $location.path();
       });        
 
       $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
-         $state.go('main', {});
+        if($rootScope.actualLocation === newLocation) {
+          $state.go('main', {});
+        }
       });
 
       $rootScope.get_current_lang = function() {
