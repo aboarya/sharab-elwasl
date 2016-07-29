@@ -1,4 +1,6 @@
 import os
+import time
+
 import flask
 
 import api
@@ -12,7 +14,8 @@ translator = GoogleTranslator()
 # routing for basic pages (pass routing onto the Angular app)
 @sharabelwasl.route('/')
 def basic_pages(**kwargs):
-    return flask.render_template('index.html')
+    now = int(round(time.time() * 1000))
+    return flask.render_template('index.html', now=now)
 
 # special file handlers and error handlers
 @sharabelwasl.route('/favicon.ico')
@@ -67,7 +70,7 @@ def search(term=None, lang=None):
     sharabelwasl.logger.info(u'executing search for terms %s .  Original query is %s %s' % (terms, term, lang))
     
     es_results, ordered = api.search(terms)
-
+    ordered.append(['terms', terms])
     sharabelwasl.logger.info(u'returning  %d qasidas' % len(ordered))
     response = dict(next='search',data=ordered)
     return flask.jsonify(response)

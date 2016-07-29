@@ -9,8 +9,9 @@ def create_query_body(terms):
     _template = { "query" : 
         {"bool": {"should": []}}, "from":0, "size":10,}
 
+    _should =[]
     # _should = [{"match" : {"{}_first".format(lang) : term}}, {"match" :  {"{}_second".format(lang) : term}} ]
-    _should = [{"match" : {"{}_{}".format(lang, key) : term}} for key in ('first', 'second') for lang, term in terms.items() if lang != 'ar']
+    # _should = [{"match" : {"{}_{}".format(lang, key) : term}} for key in ('first', 'second') for lang, term in terms.items() if lang != 'ar']
     if 'ar' in terms:
         _should.append([{"match" : {"{}_{}_na".format('ar', key) : term }} for key in ('first', 'second') for lang, term in terms.items() if lang == 'ar'])
 

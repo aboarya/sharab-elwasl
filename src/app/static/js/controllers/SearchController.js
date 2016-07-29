@@ -7,7 +7,7 @@
  */
 
 angular.module('sharabelwasl')
-  .controller('SearchController', function($rootScope, $scope, $state, $http, $stateParams, $qasidas) {
+  .controller('SearchController', function($rootScope, $scope, $state, $http, $stateParams, $qasidas, $terms) {
 
     
     var vm = $scope;
@@ -49,9 +49,14 @@ angular.module('sharabelwasl')
     vm.search_callback = function(data) {
 
       $qasidas.clear();
+      $terms.clear();
       
       for (var i=0; i < data.length; i++) {
-        $qasidas.add(new Qasida($_.get_current_lang(), data[i][0], data[i][1]));
+        if (data[i][0] == 'terms') {
+          $terms.add(data[i][1]);
+        } else {
+          $qasidas.add(new Qasida($_.get_current_lang(), data[i][0], data[i][1]));  
+        }
       };
       
       $state.go("read", {"lang" : $_.get_current_lang(), "term" : vm.term});

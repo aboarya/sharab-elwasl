@@ -38,6 +38,24 @@ var sharabelwasl = angular
 
     return service;
   })
+  .factory('$terms', function() {
+
+    var _ = {};
+    var service = {};    
+
+    service.clear = function() {
+      _ = {};
+    }
+    service.add = function(t) {
+        _ = t;
+    };
+
+    service.items = function() {
+        return _;
+    };
+
+    return service;
+  })
   .constant('DEBUG_MODE', /*DEBUG_MODE*/true/*DEBUG_MODE*/)
   .constant('VERSION_TAG', /*VERSION_TAG_START*/new Date().getTime()/*VERSION_TAG_END*/)
   .constant('LOCALES', {

@@ -1,3 +1,8 @@
+<style>
+.highlightedText {
+  background-color: yellow;
+}
+</style>
 <div class="row back-btn text-center" ng-controller="ReadController">
   <div  class="col-xs-12 text-center" >
     <button class="btn btn-primary" ng-click="back_to_search()">{a "search.back" | translate a}</button>
@@ -8,8 +13,9 @@
       <table class="table  table-borderless text-right col-xs-11">
         <tbody class="tbody">
           <tr ng-repeat="verse in qasida.verses()">  
-            <td class="col-xs-6 lead">{a verse.ar_second a}</td>
-            <td class="col-xs-6 lead">{a verse.ar_first a}</td>
+            <td class="col-xs-5 lead"><span ng-bind-html="highlight(verse.ar_second, search.ar)"></span></td>
+            <td class="col-xs-5 lead"><span ng-bind-html="highlight(verse.ar_first, search.ar)"></span></td>
+            <td class="col-xs-1 lead">{a verse.line_number a}</td>
           </tr>
         </tbody>
       </table>
